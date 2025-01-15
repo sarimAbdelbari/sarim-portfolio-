@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;          /* Light grey for background */
+    --foreground: 222.2 47% 11.2%;   /* Dark text on light background */
+    --card: 0 0% 100%;               /* Pure white for cards */
+    --card-foreground: 222.2 47% 11.2%; /* Same as foreground for consistency */
+    --popover: 0 0% 100%;            /* Matches the card */
+    --popover-foreground: 222.2 47% 11.2%; /* Same as foreground */
+    --primary: 217.2 91.2% 48%;      /* Softer primary for better contrast */
+    --primary-foreground: 0 0% 100%; /* White text on primary */
+    --secondary: 217.2 80% 92%;      /* Very light blue for secondary elements */
+    --secondary-foreground: 222.2 47% 11.2%; /* Matches foreground for readability */
+    --muted: 222.2 14% 92%;          /* Soft grey for muted elements */
+    --muted-foreground: 222.2 47% 40%; /* Medium grey for muted text */
+    --accent: 217.2 80% 92%;         /* Same as secondary */
+    --accent-foreground: 222.2 47% 11.2%; /* Matches foreground */
+    --destructive: 0 55% 65%;        /* Soft red for destructive actions */
+    --destructive-foreground: 0 0% 100%; /* White text on destructive */
+    --border: 222.2 14% 92%;         /* Light grey for borders */
+    --input: 0 0% 100%;              /* Matches card for inputs */
+    --ring: 224.3 76.3% 60%;         /* Softer ring for better visibility */
+  }
+
+  .dark {
+    --background: 222.2 90% 4%;      /* Slightly darker background */
+    --foreground: 210 35% 95%;       /* Softer white for text */
+    --card: 222.2 88% 5%;            /* Slightly darker card background */
+    --card-foreground: 210 35% 95%;  /* Softer white text on cards */
+    --popover: 222.2 88% 5%;         /* Matches card */
+    --popover-foreground: 210 35% 95%; /* Softer white text on popover */
+    --primary: 217.2 91.2% 55%;      /* Slightly deeper primary */
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 91.2% 55%;    /* Slightly deeper secondary */
+    --secondary-foreground: 210 35% 95%;
+    --muted: 217.2 32.6% 14%;        /* Darker muted background */
+    --muted-foreground: 215 20.2% 60%; /* Slightly darker muted text */
+    --accent: 217.2 32.6% 14%;       /* Matches muted */
+    --accent-foreground: 210 35% 95%;
+    --destructive: 0 62.8% 28%;      /* Slightly deeper red */
+    --destructive-foreground: 210 35% 95%;
+    --border: 217.2 32.6% 15%;       /* Slightly darker border */
+    --input: 217.2 32.6% 15%;        /* Matches border */
+    --ring: 224.3 76.3% 45%;         /* Slightly subtler ring */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+/* Glass effect for cards */
+.glass-card {
+  @apply bg-card/80 backdrop-blur-sm border border-border/50;
+}
+
+/* Gradient text */
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+}
+
+/* Animated underline */
+.animated-underline {
+  @apply relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full;
+}

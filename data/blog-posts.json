@@ -1,0 +1,79 @@
+{
+  "posts": [
+    {
+      "title": "Understanding ORM vs ODM in Modern Web Development",
+      "slug": "orm-vs-odm",
+      "excerpt": "Explore the key differences between Object-Relational Mapping (ORM) and Object-Document Mapping (ODM), and when to use each in your projects.",
+      "date": "2024-03-15",
+      "readingTime": 8,
+      "tags": ["Database", "Backend", "Architecture"],
+      "content": {
+        "intro": "When building modern web applications, choosing the right data mapping strategy is crucial for your application's performance and maintainability.",
+        "sections": [
+          {
+            "title": "What is ORM?",
+            "content": "Object-Relational Mapping (ORM) is a technique that lets you query and manipulate data from a database using an object-oriented paradigm. Instead of writing raw SQL queries, you work with objects that represent your data."
+          },
+          {
+            "title": "What is ODM?",
+            "content": "Object-Document Mapping (ODM) is similar to ORM but is specifically designed for document databases like MongoDB. It provides a way to model your application data and define schemas for documents."
+          },
+          {
+            "title": "Key Differences",
+            "content": "Data Structure: ORMs work with structured, relational data, while ODMs work with flexible, document-based data. Schema: ORMs require strict schemas, ODMs offer more flexibility. Relationships: ORMs handle relationships through foreign keys, ODMs through document embedding or references."
+          }
+        ]
+      }
+    },
+    {
+      "title": "IAM Permissions: A Comprehensive Guide",
+      "slug": "iam-permissions-guide",
+      "excerpt": "Deep dive into Identity and Access Management (IAM) permissions, best practices for security, and implementation strategies.",
+      "date": "2024-03-10",
+      "readingTime": 12,
+      "tags": ["Security", "AWS", "DevOps"],
+      "content": {
+        "intro": "Understanding IAM permissions is crucial for maintaining secure and well-organized cloud infrastructure.",
+        "sections": [
+          {
+            "title": "What is IAM?",
+            "content": "Identity and Access Management (IAM) is a framework that enables you to manage digital identities and their access to various resources and services."
+          },
+          {
+            "title": "Key Components",
+            "content": "Users: Individual entities that need access to your resources. Groups: Collections of users with similar access requirements. Roles: Sets of permissions that can be assumed by users or services. Policies: Documents that define permissions."
+          },
+          {
+            "title": "Best Practices",
+            "content": "Follow the principle of least privilege, use groups for better management, and regularly audit access patterns."
+          }
+        ]
+      }
+    },
+    {
+      "title": "CMS vs DMS: Choosing the Right System",
+      "slug": "cms-vs-dms",
+      "excerpt": "Compare Content Management Systems (CMS) and Document Management Systems (DMS) to make informed decisions for your projects.",
+      "date": "2024-03-05",
+      "readingTime": 10,
+      "tags": ["CMS", "DMS", "Enterprise"],
+      "content": {
+        "intro": "Choosing between a CMS and DMS depends on your specific needs for content organization and document handling.",
+        "sections": [
+          {
+            "title": "Content Management Systems (CMS)",
+            "content": "A CMS is designed to manage digital content, typically for websites. It focuses on creating, editing, and publishing content in various formats."
+          },
+          {
+            "title": "Document Management Systems (DMS)",
+            "content": "A DMS specializes in storing, tracking, and managing document files. It emphasizes version control, metadata, and document workflows."
+          },
+          {
+            "title": "Key Differences",
+            "content": "Purpose: CMS for web content, DMS for document files. Features: CMS focuses on presentation, DMS on organization. Use Cases: CMS for websites, DMS for internal document management."
+          }
+        ]
+      }
+    }
+  ]
+}
