@@ -38,12 +38,12 @@ export function ParticlesComponent({ id, className }: ParticlesComponentProps) {
       options={{
         ...particlesConfig,
         particles: {
-          ...particlesConfig.particles,
+          ...(particlesConfig.particles || {}),
           color: {
             value: isDark ? "#724ce9" : "#3b82f6"
           },
           links: {
-            ...particlesConfig.particles.links,
+            ...(particlesConfig.particles?.links || {}),
             color: isDark ? "#724ce9" : "#3b82f6"
           }
         }
