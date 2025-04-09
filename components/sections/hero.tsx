@@ -7,7 +7,7 @@ import { TechStack } from './tech-stack';
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-16">
+    <section className="relative min-h-screen flex items-center justify-center mt-16">
       <HeroBackground />
       <div className="container relative z-10 px-4 flex flex-col items-center gap-8">
         <HeroTitle />
