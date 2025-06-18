@@ -1,73 +1,187 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "tw-animate-css";
 
-@layer base {
-  :root {
-    --background: 0 0% 98%;          /* Light grey for background */
-    --foreground: 222.2 47% 11.2%;   /* Dark text on light background */
-    --card: 0 0% 100%;               /* Pure white for cards */
-    --card-foreground: 222.2 47% 11.2%; /* Same as foreground for consistency */
-    --popover: 0 0% 100%;            /* Matches the card */
-    --popover-foreground: 222.2 47% 11.2%; /* Same as foreground */
-    --primary: 217.2 91.2% 48%;      /* Softer primary for better contrast */
-    --primary-foreground: 0 0% 100%; /* White text on primary */
-    --secondary: 217.2 80% 92%;      /* Very light blue for secondary elements */
-    --secondary-foreground: 222.2 47% 11.2%; /* Matches foreground for readability */
-    --muted: 222.2 14% 92%;          /* Soft grey for muted elements */
-    --muted-foreground: 222.2 47% 40%; /* Medium grey for muted text */
-    --accent: 217.2 80% 92%;         /* Same as secondary */
-    --accent-foreground: 222.2 47% 11.2%; /* Matches foreground */
-    --destructive: 0 55% 65%;        /* Soft red for destructive actions */
-    --destructive-foreground: 0 0% 100%; /* White text on destructive */
-    --border: 222.2 14% 92%;         /* Light grey for borders */
-    --input: 0 0% 100%;              /* Matches card for inputs */
-    --ring: 224.3 76.3% 60%;         /* Softer ring for better visibility */
-  }
+@custom-variant dark (&:is(.dark *));
 
-  .dark {
-    --background: 222.2 90% 4%;      /* Slightly darker background */
-    --foreground: 210 35% 95%;       /* Softer white for text */
-    --card: 222.2 88% 5%;            /* Slightly darker card background */
-    --card-foreground: 210 35% 95%;  /* Softer white text on cards */
-    --popover: 222.2 88% 5%;         /* Matches card */
-    --popover-foreground: 210 35% 95%; /* Softer white text on popover */
-    --primary: 217.2 91.2% 55%;      /* Slightly deeper primary */
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 91.2% 55%;    /* Slightly deeper secondary */
-    --secondary-foreground: 210 35% 95%;
-    --muted: 217.2 32.6% 14%;        /* Darker muted background */
-    --muted-foreground: 215 20.2% 60%; /* Slightly darker muted text */
-    --accent: 217.2 32.6% 14%;       /* Matches muted */
-    --accent-foreground: 210 35% 95%;
-    --destructive: 0 62.8% 28%;      /* Slightly deeper red */
-    --destructive-foreground: 210 35% 95%;
-    --border: 217.2 32.6% 15%;       /* Slightly darker border */
-    --input: 217.2 32.6% 15%;        /* Matches border */
-    --ring: 224.3 76.3% 45%;         /* Slightly subtler ring */
-  }
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-outfit), system-ui, sans-serif; /* Updated to use Outfit */
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  /* Base settings */
+  --radius: 0.75rem;
+  
+  /* Main colors - using your blue to purple palette */
+  --blue-primary: #1e70ca;
+  --blue-secondary: #3a85d9;
+  --purple-light: #a479b8;
+  --purple-medium: #8c79c2;
+  --purple-dark: #6e63ac;
+  --pink-accent: #c590c0;
+  
+  /* Light theme - warmer background for better color contrast */
+  --background: #fafafa;
+  --foreground: #0f172a;
+  --card: #f4f4f5;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  
+  /* Primary - slightly darker for better contrast on light bg */
+  --primary: #017afc;
+  --primary-foreground: #ffffff;
+  
+  /* Secondary - subtle tinted background */
+  --secondary: #f1f5f9;
+  --secondary-foreground: #1a5fb8;
+  
+  /* Muted - warmer grays */
+  --muted: #f4f4f5;
+  --muted-foreground: #525252;
+  
+  /* Accent - slightly darker purple for better contrast */
+  --accent: #9066a3;
+  --accent-foreground: #ffffff;
+  
+  /* Utility colors */
+  --destructive: #dc2626;
+  --border: #e4e4e7;
+  --input: #f4f4f5;
+  --ring: var(--purple-medium);
+  
+  /* Chart colors - adjusted for light mode */
+  --chart-1: #1a5fb8;
+  --chart-2: #2563eb;
+  --chart-3: #7c3aed;
+  --chart-4: #a855f7;
+  --chart-5: #c084fc;
+  
+  /* Sidebar */
+  --sidebar: #f4f4f5;
+  --sidebar-foreground: #0f172a;
+  --sidebar-primary: #1a5fb8;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #9066a3;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #e4e4e7;
+  --sidebar-ring: #1a5fb8;
+}
+
+.dark {
+  /* Dark theme */
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --card: #1e293b;
+  --card-foreground: #f8fafc;
+  --popover: #1e293b;
+  --popover-foreground: #f8fafc;
+  
+  /* Primary - brightened blue for dark mode */
+  --primary: #017afc;
+  --primary-foreground: #ffffff;
+  
+  /* Secondary - darker blue */
+  --secondary: #1e293b;
+  --secondary-foreground: #f8fafc;
+  
+  /* Muted - subtle gray/blue */
+  --muted: #334155;
+  --muted-foreground: #94a3b8;
+  
+  /* Accent - brightened purple for dark mode */
+  --accent: #a479b8;
+  --accent-foreground: #ffffff;
+  
+  /* Utility colors */
+  --destructive: #f87171;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: var(--purple-medium);
+  
+  /* Chart colors - brighter for dark mode */
+  --chart-1: #3a85d9;
+  --chart-2: #6e93d0;
+  --chart-3: #8c79c2;
+  --chart-4: #a983c1;
+  --chart-5: #c590c0;
+  
+  /* Sidebar */
+  --sidebar: #1e293b;
+  --sidebar-foreground: #f8fafc;
+  --sidebar-primary: #1e70ca;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #a479b8;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #1e70ca;
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground;
   }
 }
 
-/* Glass effect for cards */
-.glass-card {
-  @apply bg-card/80 backdrop-blur-sm border border-border/50;
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
 }
 
-/* Gradient text */
-.gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Animated underline */
-.animated-underline {
-  @apply relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full;
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--secondary);
+  transition: all 0.3s ease;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--muted);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
 }
