@@ -101,7 +101,7 @@ export default function Hero() {
                 className="flex justify-center items-start gap-4 flex-col max-w-xl relative z-10"
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
             >
                 <motion.p 
                     className="text-primary text-lg md:text-xl font-medium tracking-wide"
@@ -116,7 +116,7 @@ export default function Hero() {
                     className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5, duration: 0.5 }}
+                    transition={{ delay: 0.3, duration: 0.3 }}
                 >
                     Sarim Kerroucha
                 </motion.h3>
@@ -125,7 +125,7 @@ export default function Hero() {
                     className="text-xl md:text-2xl font-medium text-primary flex"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 0.7, duration: 0.5 }}
+                    transition={{ delay: 0.4, duration: 0.3 }}
                 >
                     {text}
                     <span className={`ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity`}>|</span>
@@ -135,7 +135,7 @@ export default function Hero() {
                     className="text-muted-foreground mt-3 text-sm md:text-base leading-relaxed"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 1.2, duration: 0.7 }}
+                    transition={{ delay: 0.6, duration: 0.4 }}
                 >
                     I am a Full-Stack Developer with a passion for delivering exceptional results.
                     With my expertise in React and NextJS on the frontend, and NodeJS, and Express on the backend, 
@@ -151,8 +151,8 @@ export default function Hero() {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.5, duration: 0.5 }}
-                    className="mt-4"
+                    transition={{ delay: 0.8, duration: 0.3 }}
+                    className="mt-4 flex flex-col sm:flex-row gap-4"
                 >
                     <Button 
                         variant="default" 
@@ -208,6 +208,65 @@ export default function Hero() {
                             }}
                         />
                     </Button>
+                    <Button 
+                        variant="outline" 
+                        size="lg" 
+                        className="relative rounded-full px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-medium cursor-pointer bg-background/80 backdrop-blur-sm text-foreground border-2 border-primary/40 shadow-lg hover:shadow-2xl transition-all duration-300 group overflow-hidden hover:border-primary hover:bg-primary/5"
+                        onClick={() => window.open('https://drive.google.com/file/d/1i3Ca4eqr8GafWu6EsI8p39ermS8k59s_/view?usp=drive_link', '_blank', 'noopener,noreferrer')}
+                    >
+                        {/* Animated glow background */}
+                        <div className="absolute inset-0 bg-primary/5 blur-xl group-hover:bg-primary/10 transition-all duration-300" />
+                        
+                        {/* Shimmer effect */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12" />
+                        
+                        {/* Button content */}
+                        <span className="relative z-10 flex items-center gap-2">
+                            View Resume
+                            <motion.svg 
+                                xmlns="http://www.w3.org/2000/svg" 
+                                width="20" 
+                                height="20" 
+                                viewBox="0 0 24 24" 
+                                fill="none" 
+                                stroke="currentColor" 
+                                strokeWidth="2" 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round"
+                                className="group-hover:scale-110 transition-transform duration-300"
+                                animate={{ 
+                                    scale: [1, 1.05, 1],
+                                }}
+                                transition={{
+                                    duration: 2,
+                                    repeat: Infinity,
+                                    ease: "easeInOut",
+                                    delay: 0.5
+                                }}
+                            >
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14,2 14,8 20,8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10,9 9,9 8,9"/>
+                            </motion.svg>
+                        </span>
+                        
+                        {/* Pulsing glow ring */}
+                        <motion.div 
+                            className="absolute inset-0 rounded-full border-2 border-primary/20"
+                            animate={{ 
+                                scale: [1, 1.05, 1],
+                                opacity: [0.3, 0.6, 0.3]
+                            }}
+                            transition={{
+                                duration: 2,
+                                repeat: Infinity,
+                                ease: "easeInOut",
+                                delay: 0.5
+                            }}
+                        />
+                    </Button>
                 </motion.div>
             </motion.div>
             
@@ -216,7 +275,7 @@ export default function Hero() {
                 className="relative z-10"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.8 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
             >
                 {/* Decorative elements */}
                 <motion.div 

@@ -4,6 +4,7 @@ import Contact from "@/components/sections/contact";
 import LineSeparator from "@/components/layout/lineSperator";
 import Projects from "@/components/sections/projects";
 import Blog from "@/components/sections/blog";
+import Skills from "@/components/sections/skills";
 
 export default function Home() {
   return (
@@ -19,6 +20,10 @@ export default function Home() {
     <section id="projects">
       <Projects/>
     </section>
+    {/* <LineSeparator variant="dashed" showDot={true} />
+    <section id="skills">
+      <Skills/>
+    </section> */}
     <LineSeparator variant="dashed" showDot={true} />
     <section id="blog">
       <Blog/>

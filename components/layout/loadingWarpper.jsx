@@ -15,14 +15,14 @@ export default function LoadingWrapper({ children }) {
         const newProgress = prev + Math.random() * 15;
         return newProgress > 100 ? 100 : newProgress;
       });
-    }, 200);
+    }, 100);
 
     // Set the overall loading time
     const timer = setTimeout(() => {
       clearInterval(progressInterval);
       setProgress(100);
       setTimeout(() => setLoading(false), 300); // Small delay after reaching 100%
-    }, 2000); 
+    }, 1500); 
 
     return () => {
       clearTimeout(timer);
@@ -43,7 +43,7 @@ export default function LoadingWrapper({ children }) {
             style={{ transformOrigin: "top" }}
           >
             {/* Decorative bottom edge for top curtain */}
-            <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-[#1e70ca] via-[#3a85d9] to-[#017afc]"></div>
+            <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-chart-1 to-chart-2"></div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -59,7 +59,7 @@ export default function LoadingWrapper({ children }) {
             style={{ transformOrigin: "bottom" }}
           >
             {/* Decorative top edge for bottom curtain */}
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#1e70ca] via-[#3a85d9] to-[#017afc]"></div>
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-chart-1 to-chart-2"></div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -72,18 +72,78 @@ export default function LoadingWrapper({ children }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="space-y-6 text-center flex flex-col items-center justify-center min-h-screen relative"
+            className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-background"
           >
-            {/* Subtle background gradient - blue focused */}
-            <div 
-              className="absolute inset-0 opacity-10"
-              style={{ 
-                background: `radial-gradient(circle at center, #3a85d9 0%, #1e70ca 40%, #017afc 100%)`,
-                filter: "blur(100px)"
-              }}
-            />
+            {/* Enhanced Background Effects - matching your sections */}
+            <div className="absolute inset-0 pointer-events-none">
+              {/* Large animated gradient orbs */}
+              <motion.div
+                className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent rounded-full blur-3xl"
+                animate={{
+                  x: [0, 50, 0],
+                  y: [0, -30, 0],
+                  scale: [1, 1.2, 1],
+                  rotate: [0, 180, 360]
+                }}
+                transition={{
+                  duration: 20,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+              
+              <motion.div
+                className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-l from-accent/8 via-accent/4 to-transparent rounded-full blur-3xl"
+                animate={{
+                  x: [0, -40, 0],
+                  y: [0, 25, 0],
+                  scale: [1, 0.8, 1],
+                  rotate: [0, -180, -360]
+                }}
+                transition={{
+                  duration: 25,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 2
+                }}
+              />
 
-            {/* Animated circles - blue tones */}
+              {/* Floating particles */}
+              {[...Array(8)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-2 h-2 bg-primary/20 rounded-full"
+                  style={{
+                    left: `${20 + i * 12}%`,
+                    top: `${30 + i * 8}%`,
+                  }}
+                  animate={{
+                    y: [0, -20, 0],
+                    opacity: [0.3, 0.8, 0.3],
+                    scale: [1, 1.5, 1]
+                  }}
+                  transition={{
+                    duration: 4 + i,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: i * 0.5
+                  }}
+                />
+              ))}
+
+              {/* Grid pattern overlay */}
+              <div className="absolute inset-0 opacity-[0.02]">
+                <div className="h-full w-full" style={{
+                  backgroundImage: `
+                    linear-gradient(to right, currentColor 1px, transparent 1px),
+                    linear-gradient(to bottom, currentColor 1px, transparent 1px)
+                  `,
+                  backgroundSize: '40px 40px'
+                }} />
+              </div>
+            </div>
+
+            {/* Animated circles - using global colors */}
             <motion.div
               animate={{
                 scale: [1, 1.1, 1],
@@ -94,8 +154,7 @@ export default function LoadingWrapper({ children }) {
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-              className="absolute w-64 h-64 rounded-full border-2"
-              style={{ borderColor: '#1e70ca20' }}
+              className="absolute w-64 h-64 rounded-full border-2 border-primary/20"
             />
             
             <motion.div
@@ -109,51 +168,75 @@ export default function LoadingWrapper({ children }) {
                 ease: "easeInOut",
                 delay: 0.5
               }}
-              className="absolute w-80 h-80 rounded-full border-2"
-              style={{ borderColor: '#3a85d920' }}
+              className="absolute w-80 h-80 rounded-full border-2 border-accent/20"
             />
 
             {/* Main content */}
             <motion.div
-              initial={{ y: 20 }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.5 }}
-              className = "z-10 flex flex-col items-center justify-center text-center"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="z-10 flex flex-col items-center justify-center text-center space-y-8"
             >
-              <h3 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-[#1e70ca] via-[#3a85d9] to-[#017afc] bg-clip-text text-transparent">
-                <Typewriter
-                  words={[
-                    'Full Stack Developer',
-                    'Software Developer',
-                    'MERN Stack Specialist',
-                  ]}
-                  loop={true}
-                  cursor
-                  cursorStyle="_"
-                  typeSpeed={70}
-                  deleteSpeed={50}
-                  delaySpeed={1000}
-                />
-              </h3>
-
-              {/* Loading progress container */}
-              <div className="w-64 md:w-80 h-2 bg-muted rounded-full overflow-hidden mt-8 mb-4">
-                {/* Progress fill - clean blue gradient */}
-                <motion.div 
-                  className="h-full bg-gradient-to-r from-[#1e70ca] via-[#3a85d9] to-[#017afc]"
-                  initial={{ width: "0%" }}
-                  animate={{ width: `${progress}%` }}
-                  transition={{ ease: "easeInOut" }}
-                />
-              </div>
               
-              <motion.p
-                animate={{ opacity: [0.6, 1, 0.6] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-                className="text-sm text-muted-foreground"
+              <motion.h3 
+                className="text-4xl md:text-6xl font-bold mb-6 text-foreground"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
               >
-                Loading Experience... {Math.floor(progress)}%
-              </motion.p>
+                <span className="text-primary">
+                  <Typewriter
+                    words={[
+                      'Full Stack Developer',
+                      'Software Developer', 
+                      'MERN Stack Specialist',
+                    ]}
+                    loop={true}
+                    cursor
+                    cursorStyle="|"
+                    typeSpeed={70}
+                    deleteSpeed={50}
+                    delaySpeed={1000}
+                  />
+                </span>
+              </motion.h3>
+
+              {/* Loading progress container - matching your button style */}
+              <motion.div 
+                className="w-64 md:w-80 space-y-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.5 }}
+              >
+                <div className="relative h-3 bg-muted rounded-full overflow-hidden shadow-inner">
+                  {/* Progress fill - using global gradient */}
+                  <motion.div 
+                    className="h-full bg-gradient-to-r from-primary via-chart-1 to-chart-2 relative overflow-hidden"
+                    initial={{ width: "0%" }}
+                    animate={{ width: `${progress}%` }}
+                    transition={{ ease: "easeInOut" }}
+                  >
+                    {/* Shimmer effect - matching your button pattern */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-pulse" 
+                         style={{ 
+                           animation: progress > 0 ? 'shimmer 2s infinite' : 'none',
+                           transform: 'translateX(-100%) skewX(-12deg)'
+                         }} />
+                  </motion.div>
+                  
+                  {/* Glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-chart-1/20 to-chart-2/20 blur-sm opacity-50" />
+                </div>
+                
+                <motion.p
+                  animate={{ opacity: [0.6, 1, 0.6] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                  className="text-sm text-muted-foreground font-medium"
+                >
+                  Loading Experience... {Math.floor(progress)}%
+                </motion.p>
+              </motion.div>
             </motion.div>
           </motion.div>
         ) : (
@@ -168,6 +251,13 @@ export default function LoadingWrapper({ children }) {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <style jsx>{`
+        @keyframes shimmer {
+          0% { transform: translateX(-100%) skewX(-12deg); }
+          100% { transform: translateX(200%) skewX(-12deg); }
+        }
+      `}</style>
     </div>
   );
 }
