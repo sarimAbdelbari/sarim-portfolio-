@@ -4,7 +4,6 @@ import Contact from "@/components/sections/contact";
 import LineSeparator from "@/components/layout/lineSperator";
 import Projects from "@/components/sections/projects";
 import Blog from "@/components/sections/blog";
-import Skills from "@/components/sections/skills";
 
 export default function Home() {
   return (

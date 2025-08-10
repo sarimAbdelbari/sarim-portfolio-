@@ -97,7 +97,7 @@ const AboutMe = () => {
   };
 
   return (
-    <section className="min-h-screen py-16 px-6 lg:px-12 relative overflow-hidden">
+    <section className="min-h-screen py-16 px-3 lg:px-10 relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Animated gradient orbs */}

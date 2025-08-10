@@ -74,7 +74,7 @@ const Contact = () => {
   };
 
   return (
-    <section className="min-h-screen py-16 px-6 lg:px-12 relative overflow-hidden">
+    <section className="min-h-screen py-16 px-3 lg:px-10 relative overflow-hidden">
       {/* Enhanced Background Effects */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         {/* Large animated gradient orbs */}

@@ -7,19 +7,18 @@ import Link from 'next/link';
 const Projects = () => {
   const [hoveredProject, setHoveredProject] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const projectsData = [
     {
       id: 1,
-      title: "Fikrat Agency",
-      description: "Algeria's Premier MVP Agency specializing in rapid MVP development for startups and businesses.",
-      thumbnail: "/assets/images/mvpro.png",
+      title: "Fikrat Tech",
+      description: "Algeria's Premier Tech Agency specializing Creating software solutions for startups and businesses.",
+      thumbnail: "/assets/images/projects/mvpro.png",
       images: [
-        "/assets/images/mvpro.png",
-        "/assets/images/mvpro.png", // Add more images here
-        "/assets/images/mvpro.png",
-        "/assets/images/mvpro.png"
+        "/assets/images/projects/mvpro.png",
+        "/assets/images/projects/mvpro.png", 
+        "/assets/images/projects/mvpro.png",
+        "/assets/images/projects/mvpro.png"
       ],
       technologies: ["React", "Next.js", "Tailwind"],
       githubUrl: "https://github.com/sarimAbdelbari/Fikrat-Agency",
@@ -29,13 +28,12 @@ const Projects = () => {
     {
       id: 2,
       title: "The Pyramid Documentary",
-      description: "A full-stack CMS built with the MERN stack to manage, organize, and publish documentary content about pyramids, featuring role-based access and intuitive content editing.",
-      thumbnail: "/assets/images/PyramidDoc1.png",
+      description: "A full-stack Content Management System built with the MERN stack to manage, organize Firm's content and Iso documents, featuring role-based access and intuitive content editing.",
+      thumbnail: "/assets/images/projects/PyramidDoc3.png",
       images: [
-        "/assets/images/PyramidDoc1.png",
-        "/assets/images/PyramidDoc1.png", // Add more images here
-        "/assets/images/PyramidDoc1.png",
-        "/assets/images/PyramidDoc1.png"
+        "/assets/images/projects/PyramidDoc1.png",
+        "/assets/images/projects/PyramidDoc2.png", 
+        "/assets/images/projects/PyramidDoc3.png"
       ],
       technologies: ["React.js", "Node.js", "Express.js", "MongoDB"],
       githubUrl: "https://github.com/yourusername/pyramid-documentary",
@@ -44,30 +42,43 @@ const Projects = () => {
     },    
     {
       id: 3,
-      title: "E-Commerce Platform",
-      description: "Modern e-commerce solution with payment integration and inventory management.",
-      thumbnail: "/assets/images/mvpro.png",
+      title: "VitaLife",
+      description: "A modern, responsive landing site for a healthcare Centre Diagnostic offering services like Médecine générale, Radiologie, Traumatologie, Cardiologie, Gastro-entérologie, and Analyses médicales.",
+      thumbnail: "/assets/images/projects/Vitalife.png",
       images: [
-        "/assets/images/mvpro.png",
-        "/assets/images/mvpro.png", // Add more images here
-        "/assets/images/mvpro.png",
-        "/assets/images/mvpro.png"
+        "/assets/images/projects/Vitalife1.png",
+        "/assets/images/projects/Vitalife2.png", 
+        "/assets/images/projects/Vitalife3.png"
       ],
-      technologies: ["React", "Node.js", "MongoDB"],
-      githubUrl: "https://github.com/sarimAbdelbari/ecommerce",
-      liveUrl: "https://ecommerce-demo.com",
+      technologies: ["Next Js", "Tailwind", "Framer Motion"],
+      githubUrl: "https://github.com/sarimAbdelbari/VitaLife-Project-Freelance",
+      liveUrl: "https://vita-life-preview.vercel.app/",
       featured: false
     },
     {
       id: 4,
+      title: "Feather Journalism Platform",
+      description: "Feather is a full-stack web application designed as a modern platform for journalists to publish articles and for readers to discover and engage with content. It features distinct roles for users, journalists, and administrators, each with a tailored set of functionalities.",
+      thumbnail: "/assets/images/projects/Feather1.jpg",
+      images: [
+        "/assets/images/projects/Feather2.png",
+        "/assets/images/projects/Feather3.png"
+      ],
+      technologies: ["ReactJs", "NodeJs", "ExpressJs", "MongoDb"],
+      githubUrl: "https://github.com/sarimAbdelbari/Feather-Journalism-Platform",
+      liveUrl: "https://feather-journalism-platform.vercel.app/",
+      featured: false
+    },
+    {
+      id: 5,
       title: "Portfolio Website",
       description: "Personal portfolio website built with modern technologies and smooth animations.",
-      thumbnail: "/assets/images/PortfolioProject.png",
+      thumbnail: "/assets/images/projects/PortfolioProject1.png",
       images: [
-        "/assets/images/PortfolioProject.png",
-        "/assets/images/PortfolioProject.png", // Add more images here
-        "/assets/images/PortfolioProject.png",
-        "/assets/images/PortfolioProject.png"
+        "/assets/images/projects/PortfolioProject1.png",
+        "/assets/images/projects/PortfolioProject2.png", 
+        "/assets/images/projects/PortfolioProject1.png",
+        "/assets/images/projects/PortfolioProject1.png"
       ],
       technologies: ["Next.js", "Framer Motion", "Tailwind"],
       githubUrl: "https://github.com/sarimAbdelbari/portfolio",
@@ -267,7 +278,7 @@ const Projects = () => {
 
   return (
     <>
-      <section className="py-16 px-6 lg:px-12">
+      <section className="py-16 px-3 lg:px-10">
         <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <motion.div 
@@ -290,7 +301,7 @@ const Projects = () => {
         {projectsData.filter(project => project.featured).map((project) => (
           <motion.div
             key={`featured-${project.id}`}
-            className="mb-16"
+            className="mb-16 "
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

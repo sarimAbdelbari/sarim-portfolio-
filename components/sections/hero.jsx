@@ -65,7 +65,7 @@ export default function Hero() {
     }, []);
 
     return (
-        <section className="min-h-screen flex justify-center items-center flex-col lg:flex-row gap-12 px-6 lg:px-12 py-16 overflow-hidden mt-16 lg:mt-0 relative">
+        <section className="min-h-screen flex justify-center items-center flex-col lg:flex-row gap-12 px-3 lg:px-10 py-16 overflow-hidden mt-16 lg:mt-0 relative">
             
             {/* Animated Background Skills */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">

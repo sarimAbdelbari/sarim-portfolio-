@@ -75,7 +75,7 @@ const NavBar = () => {
 
     return (
         <motion.nav
-            className={`fixed top-0 left-0 w-full py-4 px-3 border-b z-50 transition-all duration-300 ${
+            className={`fixed top-0 left-0 w-full py-4 px-6 lg:px-12 border-b z-50 transition-all duration-300 ${
                 scrolled 
                     ? "bg-background/95 backdrop-blur-lg shadow-lg border-border/50" 
                     : "bg-background/80 backdrop-blur-sm border-transparent"
