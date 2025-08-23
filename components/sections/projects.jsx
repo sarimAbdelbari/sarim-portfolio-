@@ -36,7 +36,7 @@ const Projects = () => {
         "/assets/images/projects/PyramidDoc3.png"
       ],
       technologies: ["React.js", "Node.js", "Express.js", "MongoDB"],
-      githubUrl: "https://github.com/yourusername/pyramid-documentary",
+      githubUrl: "https://github.com/sarimAbdelbari/Pyramid-Documentary",
       liveUrl: "",
       featured: false
     },    
@@ -44,7 +44,7 @@ const Projects = () => {
       id: 3,
       title: "VitaLife",
       description: "A modern, responsive landing site for a healthcare Centre Diagnostic offering services like Médecine générale, Radiologie, Traumatologie, Cardiologie, Gastro-entérologie, and Analyses médicales.",
-      thumbnail: "/assets/images/projects/Vitalife.png",
+      thumbnail: "/assets/images/projects/Vitalife1.png",
       images: [
         "/assets/images/projects/Vitalife1.png",
         "/assets/images/projects/Vitalife2.png", 
@@ -52,7 +52,7 @@ const Projects = () => {
       ],
       technologies: ["Next Js", "Tailwind", "Framer Motion"],
       githubUrl: "https://github.com/sarimAbdelbari/VitaLife-Project-Freelance",
-      liveUrl: "https://vita-life-preview.vercel.app/",
+      liveUrl: "https://www.vitalife-medical.dz/",
       featured: false
     },
     {

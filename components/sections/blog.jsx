@@ -36,16 +36,6 @@ const Blog = () => {
     },
     {
       id: 3,
-      title: "Haru Fashion ecommerce",
-      description: "Myanmar language e-commerce အတွက် Haru Fashion အတွက် e-commerce အတွက်ခုနစ်တစ်ရေ အတွေ့အကြံု technologies စတင်လုပ်ငန်း",
-      date: "March 20, 2022",
-      readTime: "6 min",
-      category: "E-commerce",
-      slug: "modern-css-grid-layouts",
-      image: "/assets/images/projects/mvpro.png"
-    },
-    {
-      id: 4,
       title: "VitaLife Health Platform",
       description: "A comprehensive health platform built with modern web technologies, focusing on user experience and medical data management.",
       date: "February 15, 2022",
@@ -55,7 +45,7 @@ const Blog = () => {
       image: "/assets/images/projects/VitaLife.png"
     },
     {
-      id: 5,
+      id: 4,
       title: "Feather Design System",
       description: "Building a scalable design system for modern web applications with React components and design tokens.",
       date: "January 28, 2022",

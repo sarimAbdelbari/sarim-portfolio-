@@ -1,10 +1,11 @@
 "use client";
 import React from 'react'
 import ComingSoonBlog from '@/components/sections/comingSoonBlog'
+import Link from 'next/link'
 
 export default function BlogPage() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col pt-20">
       {/* Hero Section */}
       <div className="flex-1 flex flex-col justify-center items-center px-6 py-16 bg-gradient-to-br from-background via-background/95 to-background relative">
         
@@ -17,7 +18,7 @@ export default function BlogPage() {
         </div>
 
         {/* Main Content */}
-        <div className="text-center max-w-4xl mx-auto relative z-10">
+        <div className="text-center max-w-4xl mx-auto relative z-30">
           <div className="mb-8">
             <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium uppercase tracking-wide mb-6">
               Blog
@@ -51,19 +52,19 @@ export default function BlogPage() {
           </div>
 
           {/* CTA */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center relative z-20">
             <button 
               onClick={() => window.location.href = 'mailto:sarimabdelbari@gmail.com?subject=Blog Updates'}
-              className="px-6 py-3 bg-primary text-primary-foreground rounded-xl font-medium hover:bg-primary/90 transition-colors"
+              className="px-6 py-3 bg-primary text-primary-foreground rounded-xl font-medium hover:bg-primary/90 transition-colors shadow-lg hover:shadow-xl cursor-pointer relative z-10"
             >
               Get Notified
             </button>
-            <a 
+            <Link 
               href="/"
-              className="px-6 py-3 border border-border rounded-xl font-medium hover:bg-background/80 transition-colors"
+              className="px-6 py-3 border border-border rounded-xl font-medium hover:bg-background/80 transition-colors text-foreground cursor-pointer shadow-md hover:shadow-lg relative z-10"
             >
               Back to Home
-            </a>
+            </Link>
           </div>
         </div>
       </div>
