@@ -46,7 +46,7 @@ const Projects = () => {
       description: "A modern, responsive landing site for a healthcare Centre Diagnostic offering services like Médecine générale, Radiologie, Traumatologie, Cardiologie, Gastro-entérologie, and Analyses médicales.",
       thumbnail: "/assets/images/projects/Vitalife1.png",
       images: [
-        "/assets/images/projects/Vitalife1.png",
+        "/assets/images/projects/VitaLife.png",
         "/assets/images/projects/Vitalife2.png", 
         "/assets/images/projects/Vitalife3.png"
       ],
