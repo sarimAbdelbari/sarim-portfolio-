@@ -22,7 +22,7 @@ const Blog = () => {
       readTime: "8 min",
       category: "React",
       slug: "building-scalable-react-applications",
-      image: "/assets/images/projects/PortfolioProject1.png"
+      image: "/assets/images/blogs/ORMvsODM.webp"
     },
     {
       id: 2,
@@ -32,7 +32,7 @@ const Blog = () => {
       readTime: "12 min",
       category: "Portfolio",
       slug: "nodejs-performance-tips",
-      image: "/assets/images/projects/PortfolioProject2.png"
+      image: "/assets/images/blogs/SQLvsNoSQL.jpg"
     },
     {
       id: 3,
@@ -42,7 +42,7 @@ const Blog = () => {
       readTime: "10 min",
       category: "Healthcare",
       slug: "typescript-best-practices",
-      image: "/assets/images/projects/VitaLife.png"
+      image: "/assets/images/blogs/NodeJS-Tips.png"
     },
     {
       id: 4,

@@ -81,8 +81,8 @@ const Projects = () => {
         "/assets/images/projects/PortfolioProject1.png"
       ],
       technologies: ["Next.js", "Framer Motion", "Tailwind"],
-      githubUrl: "https://github.com/sarimAbdelbari/portfolio",
-      liveUrl: "https://portfolio-demo.com",
+      githubUrl: "https://github.com/sarimAbdelbari/sarim-portfolio-",
+      liveUrl: "https://sarimabdelbari.vercel.app/",
       featured: false
     }
   ];
