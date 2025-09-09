@@ -26,6 +26,7 @@ export const metadata = {
   description: "Sarim Abdelbari Full Stack Developer",
   icons: {
     icon: "/assets/svg/Black-and-White-Minimalist-Luxury-fashion-Logo.ico",
+    
   },
 };
 

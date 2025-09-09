@@ -7,27 +7,131 @@ import { Typewriter } from 'react-simple-typewriter';
 export default function LoadingWrapper({ children }) {
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [loadingMessage, setLoadingMessage] = useState('Initializing...');
+
+  // All images used in the portfolio
+  const imagesToPreload = [
+    // Hero section
+    '/assets/images/GuibleHero.png',
+    '/assets/svg/reactjs-svgrepo-com.svg',
+    '/assets/svg/nextjs-svgrepo-com.svg',
+    '/assets/svg/nodejs-svgrepo-com.svg',
+    '/assets/svg/typescript-official-svgrepo-com.svg',
+    '/assets/svg/mouse-cursor-click-svgrepo-com.svg',
+    
+    // About Me section
+    '/assets/images/MeChilling.jpg',
+    
+    // Projects section
+    '/assets/images/projects/mvpro.png',
+    '/assets/images/projects/PyramidDoc1.png',
+    '/assets/images/projects/PyramidDoc2.png',
+    '/assets/images/projects/PyramidDoc3.png',
+    '/assets/images/projects/VitaLife.png',
+    '/assets/images/projects/Vitalife1.png',
+    '/assets/images/projects/Vitalife2.png',
+    '/assets/images/projects/Vitalife3.png',
+    '/assets/images/projects/Feather1.jpg',
+    '/assets/images/projects/Feather2.png',
+    '/assets/images/projects/Feather3.png',
+    '/assets/images/projects/PortfolioProject1.png',
+    '/assets/images/projects/PortfolioProject2.png',
+    
+    // Blog section
+    '/assets/images/blogs/ORMvsODM.webp',
+    '/assets/images/blogs/SQLvsNoSQL.jpg',
+    '/assets/images/blogs/NodeJS-Tips.png'
+  ];
 
   useEffect(() => {
-    // Simulate loading progress
-    const progressInterval = setInterval(() => {
-      setProgress(prev => {
-        const newProgress = prev + Math.random() * 15;
-        return newProgress > 100 ? 100 : newProgress;
-      });
-    }, 100);
+    let loadedImages = 0;
+    let failedImages = 0;
+    const totalImages = imagesToPreload.length;
+    let timeoutId;
+    
+    setLoadingMessage('Loading assets...');
 
-    // Set the overall loading time
-    const timer = setTimeout(() => {
-      clearInterval(progressInterval);
+    // Fallback timeout (max 10 seconds)
+    timeoutId = setTimeout(() => {
+      console.warn('Image loading timeout reached, proceeding anyway...');
+      setLoadingMessage('Ready! (timeout)');
       setProgress(100);
-      setTimeout(() => setLoading(false), 300); // Small delay after reaching 100%
-    }, 1500); 
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
+    }, 10000);
 
+    // Create image preloading promises
+    const imagePromises = imagesToPreload.map((src, index) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        
+        img.onload = () => {
+          loadedImages++;
+          const currentProgress = Math.floor((loadedImages / totalImages) * 90); // Reserve 10% for final initialization
+          setProgress(currentProgress);
+          setLoadingMessage(`Loading assets... ${loadedImages}/${totalImages}`);
+          resolve(src);
+        };
+        
+        img.onerror = () => {
+          failedImages++;
+          loadedImages++; // Count failed images as loaded to continue
+          const currentProgress = Math.floor((loadedImages / totalImages) * 90);
+          setProgress(currentProgress);
+          setLoadingMessage(`Loading assets... ${loadedImages}/${totalImages}`);
+          console.warn(`Failed to load image: ${src}`);
+          resolve(src); // Resolve anyway to continue
+        };
+        
+        img.src = src;
+      });
+    });
+
+    // Wait for all images to load (or fail)
+    Promise.allSettled(imagePromises).then((results) => {
+      clearTimeout(timeoutId); // Clear the timeout since we completed
+      
+      const successfulLoads = results.filter(result => result.status === 'fulfilled').length;
+      const failedLoads = results.filter(result => result.status === 'rejected').length;
+      
+      if (failedLoads > 0) {
+        console.log(`Successfully loaded ${successfulLoads}/${totalImages} images. ${failedLoads} images failed to load but that's okay!`);
+      } else {
+        console.log(`Successfully loaded all ${totalImages} images!`);
+      }
+      
+      setLoadingMessage('Finalizing...');
+      setProgress(95);
+      
+      // Small delay for final loading steps
+      setTimeout(() => {
+        setProgress(100);
+        setLoadingMessage('Ready!');
+        
+        // Final delay before showing content
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+      }, 300);
+    }).catch((error) => {
+      clearTimeout(timeoutId); // Clear the timeout
+      // Fallback in case something goes wrong
+      console.error('Error during image preloading:', error);
+      setLoadingMessage('Ready! (with fallback)');
+      setProgress(100);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
+    });
+
+    // Cleanup function
     return () => {
-      clearTimeout(timer);
-      clearInterval(progressInterval);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
     };
+
   }, []);
 
   return (
@@ -234,7 +338,7 @@ export default function LoadingWrapper({ children }) {
                   transition={{ duration: 1.5, repeat: Infinity }}
                   className="text-sm text-muted-foreground font-medium"
                 >
-                  Loading Experience... {Math.floor(progress)}%
+                  {loadingMessage} {Math.floor(progress)}%
                 </motion.p>
               </motion.div>
             </motion.div>

@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { useEffect, useState, useMemo } from "react";
 
 export default function Hero() {
@@ -305,10 +306,13 @@ export default function Hero() {
                         ease: "easeInOut"
                     }}
                 >
-                    <img 
+                    <Image 
                         src="/assets/images/GuibleHero.png" 
                         alt="Sarim Kerroucha" 
+                        width={384}
+                        height={384}
                         className="w-72 md:w-80 lg:w-96 h-auto object-cover"
+                        priority={true}
                     />
                     
                     {/* Tech stack floating elements */}
@@ -325,9 +329,11 @@ export default function Hero() {
                             delay: 1
                         }}
                     >
-                        <img 
+                        <Image 
                             src="/assets/svg/reactjs-svgrepo-com.svg" 
                             alt="React" 
+                            width={24}
+                            height={24}
                             className="w-6 h-6 text-primary"
                             style={{ filter: 'brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(7500%) hue-rotate(210deg) brightness(100%) contrast(100%)' }}
                         />
@@ -346,9 +352,11 @@ export default function Hero() {
                             delay: 0.5
                         }}
                     >
-                        <img 
+                        <Image 
                             src="/assets/svg/nextjs-svgrepo-com.svg" 
                             alt="NextJS" 
+                            width={24}
+                            height={24}
                             className="w-6 h-6"
                             style={{ filter: 'brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(7500%) hue-rotate(210deg) brightness(100%) contrast(100%)' }}
                         />
@@ -367,9 +375,11 @@ export default function Hero() {
                             delay: 2
                         }}
                     >
-                        <img 
+                        <Image 
                             src="/assets/svg/nodejs-svgrepo-com.svg" 
                             alt="NodeJS" 
+                            width={24}
+                            height={24}
                             className="w-6 h-6"
                             style={{ filter: 'brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(7500%) hue-rotate(210deg) brightness(100%) contrast(100%)' }}
                         />
@@ -389,9 +399,11 @@ export default function Hero() {
                             delay: 1.5
                         }}
                     >
-                        <img 
+                        <Image 
                             src="/assets/svg/typescript-official-svgrepo-com.svg" 
                             alt="TypeScript" 
+                            width={24}
+                            height={24}
                             className="w-6 h-6"
                             style={{ filter: 'brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(7500%) hue-rotate(210deg) brightness(100%) contrast(100%)' }}
                         />
@@ -416,10 +428,12 @@ export default function Hero() {
                         }}
                         onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
                     >
-                        <img 
+                        <Image 
                             src="/assets/svg/mouse-cursor-click-svgrepo-com.svg" 
-                            alt="TypeScript" 
-                            className="w-6 h-6 "
+                            alt="Scroll down" 
+                            width={24}
+                            height={24}
+                            className="w-6 h-6"
                             style={{ filter: 'brightness(80) saturate(100%) invert(27%) sepia(100%) saturate(7500%) hue-rotate(210deg) brightness(100%) contrast(100%)' }}
                         />
             </motion.div>
