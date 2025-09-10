@@ -70,7 +70,7 @@ export default function LoadingWrapper({ children }) {
           loadedImages++;
           const currentProgress = Math.floor((loadedImages / totalImages) * 90); // Reserve 10% for final initialization
           setProgress(currentProgress);
-          setLoadingMessage(`Loading ${loadedImages}/${totalImages}`);
+          setLoadingMessage(`Loading ...`);
           resolve(src);
         };
         
@@ -79,7 +79,7 @@ export default function LoadingWrapper({ children }) {
           loadedImages++; // Count failed images as loaded to continue
           const currentProgress = Math.floor((loadedImages / totalImages) * 90);
           setProgress(currentProgress);
-          setLoadingMessage(`Loading ${loadedImages}/${totalImages}`);
+          setLoadingMessage(`Loading ...`);
           console.warn(`Failed to load image: ${src}`);
           resolve(src); // Resolve anyway to continue
         };
