@@ -24,9 +24,19 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata = {
   title: "Sarim Abdelbari Full Stack Developer",
   description: "Sarim Abdelbari Full Stack Developer",
+  keywords: "Sarim Abdelbari, Full Stack Developer, React, Next.js, Node.js, TypeScript, Tailwind CSS, Framer Motion, Radix UI, Tailwind CSS, Framer Motion, Radix UI",
+  authors: [{ name: "Sarim Abdelbari", url: "https://sarimabdelbari.vercel.app" }],
+  creator: "Sarim Abdelbari",
+  publisher: "Sarim Abdelbari",
+  website: "https://sarimabdelbari.vercel.app",
+  openGraph: {
+    title: "Sarim Abdelbari Full Stack Developer",
+    description: "Sarim Abdelbari Full Stack Developer",
+    url: "https://sarimabdelbari.vercel.app",
+    siteName: "Sarim Abdelbari Full Stack Developer",
+  },
   icons: {
     icon: "/assets/svg/Black-and-White-Minimalist-Luxury-fashion-Logo.ico",
-    
   },
 };
 

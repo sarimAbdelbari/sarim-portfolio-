@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useLazyLoadMultiple } from '@/components/hooks/useLazyLoad';
 
 const Projects = () => {
   const [hoveredProject, setHoveredProject] = useState(null);
@@ -87,6 +88,19 @@ const Projects = () => {
     }
   ];
 
+  // Extract all project images for lazy loading
+  const allProjectImages = projectsData.reduce((acc, project) => {
+    acc.push(project.thumbnail);
+    acc.push(...project.images);
+    return acc;
+  }, []);
+  
+  // Use lazy loading hook for all project images
+  const { ref: projectsRef, isInView, isImageLoaded } = useLazyLoadMultiple(allProjectImages, {
+    threshold: 0.1,
+    rootMargin: '200px' // Start loading when section is 200px away
+  });
+
   // Image Swiper Component
   const ImageSwiper = ({ images, currentIndex, onIndexChange }) => {
     const nextImage = () => {
@@ -108,12 +122,16 @@ const Projects = () => {
             transition={{ duration: 0.3 }}
             className="relative w-full h-full"
           >
-            <Image
-              src={images[currentIndex]}
-              alt={`Project image ${currentIndex + 1}`}
-              fill
-              className="object-cover"
-            />
+            {isImageLoaded(images[currentIndex]) ? (
+              <Image
+                src={images[currentIndex]}
+                alt={`Project image ${currentIndex + 1}`}
+                fill
+                className="object-cover"
+              />
+            ) : (
+              <ImagePlaceholder className="w-full h-full" />
+            )}
           </motion.div>
         </AnimatePresence>
 
@@ -276,9 +294,18 @@ const Projects = () => {
     }
   };
 
+  // Loading placeholder component
+  const ImagePlaceholder = ({ className }) => (
+    <div className={`bg-muted animate-pulse rounded-xl ${className}`}>
+      <div className="flex items-center justify-center h-full">
+        <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    </div>
+  );
+
   return (
     <>
-      <section className="py-16 px-3 lg:px-10">
+      <section ref={projectsRef} className="py-16 px-3 lg:px-10">
         <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <motion.div 
@@ -393,13 +420,17 @@ const Projects = () => {
                     transition={{ duration: 0.3 }}
                     onClick={() => setSelectedProject(project)}
                   >
-                    <Image
-                      src={project.thumbnail}
-                      alt={project.title}
-                      width={600}
-                      height={400}
-                      className="w-full h-auto object-cover"
-                    />
+                    {isImageLoaded(project.thumbnail) ? (
+                      <Image
+                        src={project.thumbnail}
+                        alt={project.title}
+                        width={600}
+                        height={400}
+                        className="w-full h-auto object-cover"
+                      />
+                    ) : (
+                      <ImagePlaceholder className="w-full h-64" />
+                    )}
                     
                     {/* Hover Overlay */}
                     <motion.div
@@ -449,12 +480,16 @@ const Projects = () => {
                   className="relative h-48 rounded-xl overflow-hidden mb-6 cursor-pointer"
                   onClick={() => setSelectedProject(project)}
                 >
-                  <Image
-                    src={project.thumbnail}
-                    alt={project.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+                  {isImageLoaded(project.thumbnail) ? (
+                    <Image
+                      src={project.thumbnail}
+                      alt={project.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  ) : (
+                    <ImagePlaceholder className="w-full h-full" />
+                  )}
                   
                   {/* Hover overlay with gallery preview */}
                   <motion.div

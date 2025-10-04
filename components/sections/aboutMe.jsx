@@ -214,7 +214,7 @@ const AboutMe = () => {
                   width={320}
                   height={320}
                   className="w-full h-full object-cover"
-                  priority={false}
+                  priority={true}
                   loading="eager"
                 />
               </div>

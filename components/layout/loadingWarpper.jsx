@@ -9,9 +9,9 @@ export default function LoadingWrapper({ children }) {
   const [progress, setProgress] = useState(0);
   const [loadingMessage, setLoadingMessage] = useState('Initializing...');
 
-  // All images used in the portfolio
-  const imagesToPreload = [
-    // Hero section
+  // Only critical images that need to be loaded before site reveal
+  const criticalImagesToPreload = [
+    // Hero section - Above the fold, critical for first impression
     '/assets/images/GuibleHero.png',
     '/assets/svg/reactjs-svgrepo-com.svg',
     '/assets/svg/nextjs-svgrepo-com.svg',
@@ -19,39 +19,21 @@ export default function LoadingWrapper({ children }) {
     '/assets/svg/typescript-official-svgrepo-com.svg',
     '/assets/svg/mouse-cursor-click-svgrepo-com.svg',
     
-    // About Me section
-    '/assets/images/MeChilling.jpg',
+    // About Me section - Second most important section
+    '/assets/images/MeChilling.jpg'
     
-    // Projects section
-    '/assets/images/projects/mvpro.png',
-    '/assets/images/projects/PyramidDoc1.png',
-    '/assets/images/projects/PyramidDoc2.png',
-    '/assets/images/projects/PyramidDoc3.png',
-    '/assets/images/projects/VitaLife.png',
-    '/assets/images/projects/Vitalife1.png',
-    '/assets/images/projects/Vitalife2.png',
-    '/assets/images/projects/Vitalife3.png',
-    '/assets/images/projects/Feather1.jpg',
-    '/assets/images/projects/Feather2.png',
-    '/assets/images/projects/Feather3.png',
-    '/assets/images/projects/PortfolioProject1.png',
-    '/assets/images/projects/PortfolioProject2.png',
-    
-    // Blog section
-    '/assets/images/blogs/ORMvsODM.webp',
-    '/assets/images/blogs/SQLvsNoSQL.jpg',
-    '/assets/images/blogs/NodeJS-Tips.png'
+    // Note: Projects and Blog images will be lazy loaded when user scrolls to them
   ];
 
   useEffect(() => {
     let loadedImages = 0;
     let failedImages = 0;
-    const totalImages = imagesToPreload.length;
+    const totalImages = criticalImagesToPreload.length;
     let timeoutId;
     
     setLoadingMessage('Loading assets...');
 
-    // Fallback timeout (max 10 seconds)
+    // Fallback timeout (reduced to 5 seconds for critical images only)
     timeoutId = setTimeout(() => {
       console.warn('Image loading timeout reached, proceeding anyway...');
       setLoadingMessage('Ready! (timeout)');
@@ -59,10 +41,10 @@ export default function LoadingWrapper({ children }) {
       setTimeout(() => {
         setLoading(false);
       }, 500);
-    }, 10000);
+    }, 5000);
 
     // Create image preloading promises
-    const imagePromises = imagesToPreload.map((src, index) => {
+    const imagePromises = criticalImagesToPreload.map((src, index) => {
       return new Promise((resolve, reject) => {
         const img = new Image();
         

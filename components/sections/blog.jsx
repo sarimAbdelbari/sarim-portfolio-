@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useRef } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { useLazyLoadMultiple } from '@/components/hooks/useLazyLoad';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -56,6 +57,24 @@ const Blog = () => {
     }
   ];
 
+  // Extract all blog images for lazy loading
+  const allBlogImages = blogPosts.map(post => post.image);
+  
+  // Use lazy loading hook for all blog images
+  const { ref: blogRef, isInView, isImageLoaded } = useLazyLoadMultiple(allBlogImages, {
+    threshold: 0.1,
+    rootMargin: '200px' // Start loading when section is 200px away
+  });
+
+  // Loading placeholder component
+  const ImagePlaceholder = ({ className }) => (
+    <div className={`bg-muted animate-pulse rounded-xl ${className}`}>
+      <div className="flex items-center justify-center h-full">
+        <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    </div>
+  );
+
   const formatDate = (dateString) => {
     return dateString;
   };
@@ -81,7 +100,7 @@ const Blog = () => {
   };
 
   return (
-    <section className="min-h-screen py-16 px-3 lg:px-10 relative overflow-hidden">
+    <section ref={blogRef} className="min-h-screen py-16 px-3 lg:px-10 relative overflow-hidden">
       {/* Background Effects - matching hero and aboutMe */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Animated gradient orbs */}
@@ -232,13 +251,17 @@ const Blog = () => {
                   >
                     {/* Image */}
                     <div className="relative h-48 overflow-hidden">
-                      <motion.img
-                        src={post.image}
-                        alt={post.title}
-                        className="w-full h-full object-cover"
-                        whileHover={{ scale: 1.1 }}
-                        transition={{ duration: 0.4 }}
-                      />
+                      {isImageLoaded(post.image) ? (
+                        <motion.img
+                          src={post.image}
+                          alt={post.title}
+                          className="w-full h-full object-cover"
+                          whileHover={{ scale: 1.1 }}
+                          transition={{ duration: 0.4 }}
+                        />
+                      ) : (
+                        <ImagePlaceholder className="w-full h-full" />
+                      )}
                       <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent" />
                       
                       {/* Category Badge */}

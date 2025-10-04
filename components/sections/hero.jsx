@@ -313,6 +313,7 @@ export default function Hero() {
                         height={384}
                         className="w-72 md:w-80 lg:w-96 h-auto object-cover"
                         priority={true}
+                        loading="eager"
                     />
                     
                     {/* Tech stack floating elements */}
