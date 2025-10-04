@@ -93,7 +93,7 @@ const NavBar = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        <h3 className="font-bold text-xl md:text-2xl hover:text-primary duration-300 ease-in-out">
+                        <h3 className="font-bold text-lg md:text-xl hover:text-primary duration-300 ease-in-out">
                             Sarim<span className="text-primary">Abdelbari</span>
                             <span className="text-muted-foreground text-sm ml-1">.dev</span>
                         </h3>
@@ -112,7 +112,7 @@ const NavBar = () => {
                                 onClick={() => scrollToSection(item.id)}
                             >
                                 <span className={`
-                                    font-medium text-sm uppercase tracking-wide transition-all duration-300
+                                    font-medium text-xs uppercase tracking-wide transition-all duration-300
                                     ${activeSection === item.id 
                                         ? 'text-primary font-semibold' 
                                         : 'text-foreground hover:text-primary'
