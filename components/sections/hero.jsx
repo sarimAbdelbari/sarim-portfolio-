@@ -113,16 +113,16 @@ export default function Hero() {
                     Salam, my name is
                 </motion.p>
                 
-                <motion.h3 
-                    className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground"
+                <motion.h1 
+                    className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-9"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.3 }}
                 >
-                    Sarim Kerroucha
-                </motion.h3>
+                    Sarim Kerroucha <br/> <span className="text-secondary text-lg">Full-Stack Developer</span>
+                </motion.h1>
                 
-                <motion.h4 
+                <motion.h2 
                     className="text-xl md:text-2xl font-medium text-primary flex"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -130,7 +130,7 @@ export default function Hero() {
                 >
                     {text}
                     <span className={`ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity`}>|</span>
-                </motion.h4>
+                </motion.h2>
                 
                 <motion.p 
                     className="text-muted-foreground mt-3 text-sm md:text-base leading-relaxed"

@@ -22,18 +22,18 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: "Sarim Abdelbari Full Stack Developer",
-  description: "Sarim Abdelbari Full Stack Developer",
-  keywords: "Sarim Abdelbari, Full Stack Developer, React, Next.js, Node.js, TypeScript, Tailwind CSS, Framer Motion, Radix UI, Tailwind CSS, Framer Motion, Radix UI",
-  authors: [{ name: "Sarim Abdelbari", url: "https://sarimabdelbari.vercel.app" }],
-  creator: "Sarim Abdelbari",
-  publisher: "Sarim Abdelbari",
+  title: "Sarim Kerroucha | Full-Stack Developer Portfolio",
+  description: "Welcome to the portfolio of Sarim Kerroucha, a passionate Full-Stack Developer specializing in React, Next.js, and Node.js. Explore my projects and articles.",
+  keywords: "Sarim Kerroucha, Full Stack Developer, React, Next.js, Node.js, TypeScript, Tailwind CSS, Framer Motion, Radix UI, Portfolio, Web Developer",
+  authors: [{ name: "Sarim Kerroucha", url: "https://sarimabdelbari.vercel.app" }],
+  creator: "Sarim Kerroucha",
+  publisher: "Sarim Kerroucha",
   website: "https://sarimabdelbari.vercel.app",
   openGraph: {
-    title: "Sarim Abdelbari Full Stack Developer",
-    description: "Sarim Abdelbari Full Stack Developer",
+    title: "Sarim Kerroucha | Full-Stack Developer Portfolio",
+    description: "Welcome to the portfolio of Sarim Kerroucha, a passionate Full-Stack Developer specializing in React, Next.js, and Node.js. Explore my projects and articles.",
     url: "https://sarimabdelbari.vercel.app",
-    siteName: "Sarim Abdelbari Full Stack Developer",
+    siteName: "Sarim Kerroucha's Portfolio",
   },
   icons: {
     icon: "/assets/svg/Black-and-White-Minimalist-Luxury-fashion-Logo.ico",
