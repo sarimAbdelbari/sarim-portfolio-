@@ -5,11 +5,14 @@ import { useState, useRef } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { useLazyLoadMultiple } from '@/components/hooks/useLazyLoad';
+import { usePerformanceMode } from '@/components/hooks/usePerformanceMode';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 const Blog = () => {
+  // Performance mode for mobile devices
+  const { shouldReduceMotion } = usePerformanceMode();
   const [hoveredPost, setHoveredPost] = useState(null);
   const swiperRef = useRef(null);
 
@@ -101,74 +104,76 @@ const Blog = () => {
 
   return (
     <section ref={blogRef} className="min-h-screen py-16 px-3 lg:px-10 relative overflow-hidden">
-      {/* Background Effects - matching hero and aboutMe */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Animated gradient orbs */}
-        <motion.div
-          className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent rounded-full blur-3xl"
-          animate={{
-            x: [0, 50, 0],
-            y: [0, -30, 0],
-            scale: [1, 1.2, 1],
-            rotate: [0, 180, 360]
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        
-        <motion.div
-          className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-l from-primary/8 via-primary/4 to-transparent rounded-full blur-3xl"
-          animate={{
-            x: [0, -40, 0],
-            y: [0, 25, 0],
-            scale: [1, 0.8, 1],
-            rotate: [0, -180, -360]
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2
-          }}
-        />
-
-        {/* Floating particles */}
-        {[...Array(8)].map((_, i) => (
+      {/* Background Effects - Disabled on mobile for performance */}
+      {!shouldReduceMotion && (
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Animated gradient orbs */}
           <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-primary/20 rounded-full"
-            style={{
-              left: `${20 + i * 10}%`,
-              top: `${30 + i * 8}%`,
-            }}
+            className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent rounded-full blur-3xl"
             animate={{
-              y: [0, -20, 0],
-              opacity: [0.3, 0.8, 0.3],
-              scale: [1, 1.5, 1]
+              x: [0, 50, 0],
+              y: [0, -30, 0],
+              scale: [1, 1.2, 1],
+              rotate: [0, 180, 360]
             }}
             transition={{
-              duration: 4 + i,
+              duration: 20,
               repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 0.5
+              ease: "easeInOut"
             }}
           />
-        ))}
+          
+          <motion.div
+            className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-l from-primary/8 via-primary/4 to-transparent rounded-full blur-3xl"
+            animate={{
+              x: [0, -40, 0],
+              y: [0, 25, 0],
+              scale: [1, 0.8, 1],
+              rotate: [0, -180, -360]
+            }}
+            transition={{
+              duration: 25,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2
+            }}
+          />
 
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 opacity-[0.02]">
-          <div className="h-full w-full" style={{
-            backgroundImage: `
-              linear-gradient(to right, currentColor 1px, transparent 1px),
-              linear-gradient(to bottom, currentColor 1px, transparent 1px)
-            `,
-            backgroundSize: '40px 40px'
-          }} />
+          {/* Floating particles */}
+          {[...Array(8)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-primary/20 rounded-full"
+              style={{
+                left: `${20 + i * 10}%`,
+                top: `${30 + i * 8}%`,
+              }}
+              animate={{
+                y: [0, -20, 0],
+                opacity: [0.3, 0.8, 0.3],
+                scale: [1, 1.5, 1]
+              }}
+              transition={{
+                duration: 4 + i,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.5
+              }}
+            />
+          ))}
+
+          {/* Grid pattern overlay */}
+          <div className="absolute inset-0 opacity-[0.02]">
+            <div className="h-full w-full" style={{
+              backgroundImage: `
+                linear-gradient(to right, currentColor 1px, transparent 1px),
+                linear-gradient(to bottom, currentColor 1px, transparent 1px)
+              `,
+              backgroundSize: '40px 40px'
+            }} />
+          </div>
         </div>
-      </div>
+      )}
 
       <motion.div
         className="max-w-7xl mx-auto relative z-10"
@@ -240,7 +245,7 @@ const Blog = () => {
               <SwiperSlide key={post.id}>
                 <Link href="/blog">
                   <motion.article
-                    className="group relative bg-background/60 backdrop-blur-sm border border-border/50 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer h-full"
+                    className="group h-full relative bg-background/60 backdrop-blur-sm border border-border/50 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer "
                     whileHover={{ 
                       y: -8,
                       scale: 1.02

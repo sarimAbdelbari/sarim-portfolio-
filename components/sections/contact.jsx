@@ -2,8 +2,11 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { usePerformanceMode } from "@/components/hooks/usePerformanceMode";
 
 const Contact = () => {
+  // Performance mode for mobile devices
+  const { shouldReduceMotion } = usePerformanceMode();
   const [hoveredSocial, setHoveredSocial] = useState(null);
 
   const socialLinks = [
@@ -84,55 +87,56 @@ const Contact = () => {
 
   return (
     <section className="min-h-screen py-16 px-3 lg:px-10 relative overflow-hidden">
-      {/* Enhanced Background Effects */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        {/* Large animated gradient orbs */}
-        <motion.div
-          className="absolute top-10 left-5 w-[500px] h-[500px] rounded-full bg-gradient-to-r from-primary/12 via-primary/6 to-transparent blur-3xl"
-          animate={{
-            x: [0, 60, 0],
-            y: [0, -40, 0],
-            scale: [1, 1.3, 1],
-            rotate: [0, 120, 240, 360]
-          }}
-          transition={{
-            duration: 30,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        
-        <motion.div
-          className="absolute bottom-10 right-5 w-[400px] h-[400px] rounded-full bg-gradient-to-l from-primary/10 via-primary/5 to-transparent blur-3xl"
-          animate={{
-            x: [0, -50, 0],
-            y: [0, 30, 0],
-            scale: [1, 0.7, 1],
-            rotate: [0, -120, -240, -360]
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 3
-          }}
-        />
+      {/* Enhanced Background Effects - Disabled on mobile for performance */}
+      {!shouldReduceMotion && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+          {/* Large animated gradient orbs */}
+          <motion.div
+            className="absolute top-10 left-5 w-[500px] h-[500px] rounded-full bg-gradient-to-r from-primary/12 via-primary/6 to-transparent blur-3xl"
+            animate={{
+              x: [0, 60, 0],
+              y: [0, -40, 0],
+              scale: [1, 1.3, 1],
+              rotate: [0, 120, 240, 360]
+            }}
+            transition={{
+              duration: 30,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          
+          <motion.div
+            className="absolute bottom-10 right-5 w-[400px] h-[400px] rounded-full bg-gradient-to-l from-primary/10 via-primary/5 to-transparent blur-3xl"
+            animate={{
+              x: [0, -50, 0],
+              y: [0, 30, 0],
+              scale: [1, 0.7, 1],
+              rotate: [0, -120, -240, -360]
+            }}
+            transition={{
+              duration: 25,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 3
+            }}
+          />
 
-        {/* Medium orbs */}
-        <motion.div
-          className="absolute top-1/2 left-1/4 w-64 h-64 rounded-full bg-gradient-to-br from-primary/8 to-transparent blur-2xl"
-          animate={{
-            x: [0, 40, 0],
-            y: [0, -25, 0],
-            scale: [1, 1.1, 1]
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1
-          }}
-        />
+          {/* Medium orbs */}
+          <motion.div
+            className="absolute top-1/2 left-1/4 w-64 h-64 rounded-full bg-gradient-to-br from-primary/8 to-transparent blur-2xl"
+            animate={{
+              x: [0, 40, 0],
+              y: [0, -25, 0],
+              scale: [1, 1.1, 1]
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1
+            }}
+          />
 
         {/* Floating geometric shapes */}
         {[...Array(8)].map((_, i) => (
@@ -203,6 +207,7 @@ const Contact = () => {
           style={{ transformOrigin: 'center top' }}
         />
       </div>
+      )}
 
       <motion.div
         className="max-w-4xl mx-auto relative z-10 text-center"
@@ -294,14 +299,14 @@ const Contact = () => {
             className="space-y-8"
             variants={itemVariants}
           >
-            <div className="flex justify-center space-x-6">
+            <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6 max-w-xl mx-auto">
               {socialLinks.map((social, index) => (
                 <motion.a
                   key={social.name}
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-16 h-16 bg-background/50 backdrop-blur-sm border border-border rounded-full flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all duration-300 group shadow-lg hover:shadow-xl"
+                  className="relative w-14 h-14 md:w-16 md:h-16 bg-background/50 backdrop-blur-sm border border-border rounded-full flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all duration-300 group shadow-lg hover:shadow-xl"
                   onHoverStart={() => setHoveredSocial(social.name)}
                   onHoverEnd={() => setHoveredSocial(null)}
                   whileHover={{ scale: 1.1, y: -5 }}
@@ -313,6 +318,15 @@ const Contact = () => {
                   <div className="text-muted-foreground group-hover:text-primary transition-colors duration-300">
                     {social.icon}
                   </div>
+                  {hoveredSocial === social.name && (
+                    <motion.span
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="absolute -bottom-8 text-xs font-medium text-primary whitespace-nowrap"
+                    >
+                      {social.name}
+                    </motion.span>
+                  )}
                 </motion.a>
               ))}
             </div>

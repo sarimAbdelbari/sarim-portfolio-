@@ -1,8 +1,11 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { usePerformanceMode } from "@/components/hooks/usePerformanceMode";
 
 const AboutMe = () => {
+  // Performance mode for mobile devices
+  const { shouldReduceMotion } = usePerformanceMode();
 
 // this is the informations use it 
 // Education
@@ -98,74 +101,76 @@ const AboutMe = () => {
 
   return (
     <section className="min-h-screen py-16 px-3 lg:px-10 relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Animated gradient orbs */}
-        <motion.div
-          className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent rounded-full blur-3xl"
-          animate={{
-            x: [0, 50, 0],
-            y: [0, -30, 0],
-            scale: [1, 1.2, 1],
-            rotate: [0, 180, 360]
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        
-        <motion.div
-          className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-l from-primary/8 via-primary/4 to-transparent rounded-full blur-3xl"
-          animate={{
-            x: [0, -40, 0],
-            y: [0, 25, 0],
-            scale: [1, 0.8, 1],
-            rotate: [0, -180, -360]
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2
-          }}
-        />
-
-        {/* Floating particles */}
-        {[...Array(6)].map((_, i) => (
+      {/* Background Effects - Disabled on mobile for performance */}
+      {!shouldReduceMotion && (
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Animated gradient orbs */}
           <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-primary/20 rounded-full"
-            style={{
-              left: `${20 + i * 15}%`,
-              top: `${30 + i * 10}%`,
-            }}
+            className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent rounded-full blur-3xl"
             animate={{
-              y: [0, -20, 0],
-              opacity: [0.3, 0.8, 0.3],
-              scale: [1, 1.5, 1]
+              x: [0, 50, 0],
+              y: [0, -30, 0],
+              scale: [1, 1.2, 1],
+              rotate: [0, 180, 360]
             }}
             transition={{
-              duration: 4 + i,
+              duration: 20,
               repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 0.5
+              ease: "easeInOut"
             }}
           />
-        ))}
+          
+          <motion.div
+            className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-l from-primary/8 via-primary/4 to-transparent rounded-full blur-3xl"
+            animate={{
+              x: [0, -40, 0],
+              y: [0, 25, 0],
+              scale: [1, 0.8, 1],
+              rotate: [0, -180, -360]
+            }}
+            transition={{
+              duration: 25,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2
+            }}
+          />
 
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 opacity-[0.02]">
-          <div className="h-full w-full" style={{
-            backgroundImage: `
-              linear-gradient(to right, currentColor 1px, transparent 1px),
-              linear-gradient(to bottom, currentColor 1px, transparent 1px)
-            `,
-            backgroundSize: '40px 40px'
-          }} />
+          {/* Floating particles */}
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-primary/20 rounded-full"
+              style={{
+                left: `${20 + i * 15}%`,
+                top: `${30 + i * 10}%`,
+              }}
+              animate={{
+                y: [0, -20, 0],
+                opacity: [0.3, 0.8, 0.3],
+                scale: [1, 1.5, 1]
+              }}
+              transition={{
+                duration: 4 + i,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.5
+              }}
+            />
+          ))}
+
+          {/* Grid pattern overlay */}
+          <div className="absolute inset-0 opacity-[0.02]">
+            <div className="h-full w-full" style={{
+              backgroundImage: `
+                linear-gradient(to right, currentColor 1px, transparent 1px),
+                linear-gradient(to bottom, currentColor 1px, transparent 1px)
+              `,
+              backgroundSize: '40px 40px'
+            }} />
+          </div>
         </div>
-      </div>
+      )}
 
       <motion.div 
         className="max-w-7xl mx-auto relative z-10"
@@ -207,13 +212,13 @@ const AboutMe = () => {
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
             >
-              <div className=" h-64  md:h-80 rounded-2xl overflow-hidden border-4 border-background shadow-2xl">
+              <div className=" w-full h-full rounded-2xl overflow-hidden border-4 border-background shadow-2xl">
                 <Image
-                  src="/assets/images/MeChilling.jpg" // Update with your image path
+                  src="/assets/images/something.jpg" // Update with your image path
                   alt="Sarim Kerroucha"
                   width={320}
                   height={320}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                   priority={true}
                   loading="eager"
                 />

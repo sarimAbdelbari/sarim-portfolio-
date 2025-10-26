@@ -3,8 +3,12 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState, useMemo } from "react";
+import { usePerformanceMode } from "@/components/hooks/usePerformanceMode";
 
 export default function Hero() {
+    // Performance mode for mobile devices
+    const { shouldReduceMotion } = usePerformanceMode();
+    
     // For the typing effect
     const [text, setText] = useState("");
     const fullText = ["A Fullstack Developer", "A React Enthusiast", "A NextJS Advocate", "A NodeJS Backend Developer"];
@@ -68,34 +72,36 @@ export default function Hero() {
     return (
         <section className="min-h-screen flex justify-center items-center flex-col lg:flex-row gap-12 px-3 lg:px-10 py-16 overflow-hidden mt-16 lg:mt-0 relative">
             
-            {/* Animated Background Skills */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-    {backgroundSkills.map((skill, index) => (
-        <motion.div
-            key={skill.text}
-            className="absolute text-muted-foreground/50 font-semibold select-none"
-            style={{
-                fontSize: `${skill.fontSize}px`,
-                left: `${skill.left}%`,
-                top: `${skill.top}%`,
-            }}
-            animate={{
-                x: [0, skill.moveX, 0, -skill.moveX, 0],
-                y: [0, skill.moveY, 0, -skill.moveY, 0],
-                opacity: [0.1, 0.3, 0.1, 0.3, 0.1],
-                rotate: [0, skill.rotate, 0, -skill.rotate, 0],
-            }}
-            transition={{
-                duration: skill.duration,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: index * 0.3,
-            }}
-        >
-            {skill.text}
-        </motion.div>
-    ))}
-</div>
+            {/* Animated Background Skills - Only on desktop for performance */}
+            {!shouldReduceMotion && (
+                <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+                    {backgroundSkills.map((skill, index) => (
+                        <motion.div
+                            key={skill.text}
+                            className="absolute text-muted-foreground/50 font-semibold select-none"
+                            style={{
+                                fontSize: `${skill.fontSize}px`,
+                                left: `${skill.left}%`,
+                                top: `${skill.top}%`,
+                            }}
+                            animate={{
+                                x: [0, skill.moveX, 0, -skill.moveX, 0],
+                                y: [0, skill.moveY, 0, -skill.moveY, 0],
+                                opacity: [0.1, 0.3, 0.1, 0.3, 0.1],
+                                rotate: [0, skill.rotate, 0, -skill.rotate, 0],
+                            }}
+                            transition={{
+                                duration: skill.duration,
+                                repeat: Infinity,
+                                ease: "easeInOut",
+                                delay: index * 0.3,
+                            }}
+                        >
+                            {skill.text}
+                        </motion.div>
+                    ))}
+                </div>
+            )}
 
             {/* Left Content */}
             <motion.div 
@@ -278,28 +284,30 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
             >
-                {/* Decorative elements */}
-                <motion.div 
-                    className="absolute -z-10 w-64 h-64 rounded-full bg-primary/10 blur-3xl"
-                    animate={{ 
-                        x: [0, 10, 0, -10, 0],
-                        y: [0, -10, 0, 10, 0],
-                    }}
-                    transition={{
-                        duration: 10,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                    }}
-                />
+                {/* Decorative elements - Simplified on mobile */}
+                {!shouldReduceMotion && (
+                    <motion.div 
+                        className="absolute -z-10 w-64 h-64 rounded-full bg-primary/10 blur-3xl"
+                        animate={{ 
+                            x: [0, 10, 0, -10, 0],
+                            y: [0, -10, 0, 10, 0],
+                        }}
+                        transition={{
+                            duration: 10,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }}
+                    />
+                )}
                 
                 
-                {/* Main image with floating animation */}
+                {/* Main image with floating animation - Reduced on mobile */}
                 <motion.div
                     className="relative z-10 overflow-hidden rounded-2xl border-4 border-background shadow-xl"
-                    animate={{ 
+                    animate={!shouldReduceMotion ? { 
                         y: [0, -10, 0, 10, 0],
                         rotate: [0, 1, 0, -1, 0]
-                    }}
+                    } : {}}
                     transition={{
                         duration: 8,
                         repeat: Infinity,
@@ -316,7 +324,9 @@ export default function Hero() {
                         loading="eager"
                     />
                     
-                    {/* Tech stack floating elements */}
+                    {/* Tech stack floating elements - Only on desktop */}
+                    {!shouldReduceMotion && (
+                        <>
                     <motion.div 
                         className="absolute -right-4 -bottom-4 bg-background p-3 rounded-lg shadow-lg border border-border"
                         animate={{ 
@@ -409,7 +419,8 @@ export default function Hero() {
                             style={{ filter: 'brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(7500%) hue-rotate(210deg) brightness(100%) contrast(100%)' }}
                         />
                     </motion.div>
-
+                    </>
+                    )}
                    
                 </motion.div>
             </motion.div>
