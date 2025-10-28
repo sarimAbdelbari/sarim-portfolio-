@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { useLazyLoadMultiple } from '@/components/hooks/useLazyLoad';
 import { usePerformanceMode } from '@/components/hooks/usePerformanceMode';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -20,44 +21,45 @@ const Blog = () => {
   const blogPosts = [
     {
       id: 1,
-      title: "How Do I Develop My Terminal Portfolio Website with React",
-      description: "Developing a terminal-like website using ReactJS, TypeScript and Styled-Components. Includes features like autocomplete, multiple themes, command...",
-      date: "June 9, 2022",
-      readTime: "8 min",
-      category: "React",
-      slug: "building-scalable-react-applications",
+      title: "How ORM differs from ODM",
+      description: "Object-Relational Mapping (ORM) and Object-Document Mapping (ODM) are two approaches to mapping between object-oriented programming languages and relational databases or document-oriented databases. They are used to simplify the interaction between the application and the database, making it easier to write code that is independent of the database.",
+      date: "December 7, 2024",
+      readTime: "5 min",
+      category: "Database",
+      slug: "how-orm-differs-from-odm",
       image: "/assets/images/blogs/ORMvsODM.webp"
     },
     {
       id: 2,
-      title: "How Do I Develop My Portfolio Website & Blog",
-      description: "My journey about planning, designing and developing my very first portfolio website and my personal blog. Thoughts about my motivation for this project and experiences.",
-      date: "March 25, 2022",
-      readTime: "12 min",
-      category: "Portfolio",
-      slug: "nodejs-performance-tips",
-      image: "/assets/images/blogs/SQLvsNoSQL.jpg"
+      title: "How i developed my own UML Diagram generator",
+      description: "I developed my own UML Diagram generator using React and TypeScript. It is a simple tool that allows you to generate UML diagrams from a text description.",
+      date: "October 28, 2025",
+      readTime: "15 min",
+      category: "Frontend",
+      slug: "how-i-developed-my-own-uml-diagram-generator",
+      image: "/assets/images/blogs/UMLDiagramGenerator.png"
     },
     {
       id: 3,
-      title: "VitaLife Health Platform",
-      description: "A comprehensive health platform built with modern web technologies, focusing on user experience and medical data management.",
-      date: "February 15, 2022",
-      readTime: "10 min",
-      category: "Healthcare",
-      slug: "typescript-best-practices",
-      image: "/assets/images/blogs/NodeJS-Tips.png"
+      title: "How SQL differs from NoSQL",
+      description: "SQL and NoSQL are two different approaches to storing and querying data. SQL is a relational database management system (RDBMS) that uses tables to store data, while NoSQL is a non-relational database management system that uses documents to store data.",
+      date: "October 10, 2025",
+      readTime: "5 min",
+      category: "Database",
+      slug: "how-sql-differs-from-nosql",
+      image: "/assets/images/blogs/SQLvsNoSQL.jpg"
     },
     {
       id: 4,
-      title: "Feather Design System",
-      description: "Building a scalable design system for modern web applications with React components and design tokens.",
-      date: "January 28, 2022",
-      readTime: "15 min",
-      category: "Design System",
-      slug: "feather-design-system",
-      image: "/assets/images/projects/Feather1.jpg"
-    }
+      title: "How Node Js Works multiple threads",
+      description: "Node.js is a runtime environment that allows you to run JavaScript code outside of a browser. It is built on top of the V8 JavaScript engine and is designed to be fast and efficient.",
+      date: "August 22, 2025",
+      readTime: "5 min",
+      category: "Backend",
+      slug: "how-node-js-works-multiple-threads",
+      image: "/assets/images/blogs/NodeJS-Tips.png"
+    },
+   
   ];
 
   // Extract all blog images for lazy loading
@@ -255,17 +257,17 @@ const Blog = () => {
                     transition={{ duration: 0.3 }}
                   >
                     {/* Image */}
-                    <div className="relative h-48 overflow-hidden">
+                    <div className="relative h-48 overflow-hidden border-4 border-background shadow-2xl rounded-2xl">
                       {isImageLoaded(post.image) ? (
                         <motion.img
                           src={post.image}
                           alt={post.title}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover rounded-xl"
                           whileHover={{ scale: 1.1 }}
                           transition={{ duration: 0.4 }}
                         />
                       ) : (
-                        <ImagePlaceholder className="w-full h-full" />
+                        <ImagePlaceholder className="w-full h-full rounded-xl" />
                       )}
                       <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent" />
                       
@@ -305,10 +307,7 @@ const Blog = () => {
                         transition={{ duration: 0.2 }}
                       >
                         <span>Read more</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M5 12h14"/>
-                          <path d="M12 5l7 7-7 7"/>
-                        </svg>
+                        <ArrowRight size={16} />
                       </motion.div>
                     </div>
 
@@ -326,9 +325,7 @@ const Blog = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M15 18l-6-6 6-6"/>
-            </svg>
+            <ChevronLeft size={20} />
           </motion.button>
 
           <motion.button
@@ -336,9 +333,7 @@ const Blog = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M9 18l6-6-6-6"/>
-            </svg>
+            <ChevronRight size={20} />
           </motion.button>
         </motion.div>
 
@@ -354,10 +349,7 @@ const Blog = () => {
               whileTap={{ scale: 0.98 }}
             >
               <span>Read all blog posts</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 12h14"/>
-                <path d="M12 5l7 7-7 7"/>
-              </svg>
+              <ArrowRight size={16} />
             </motion.button>
           </Link>
         </motion.div>

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useLazyLoadMultiple } from '@/components/hooks/useLazyLoad';
 import { projectsData, categories } from '@/lib/data';
+import { Github, ExternalLink, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 // --- Helper Components ---
 
@@ -14,38 +15,6 @@ const ImagePlaceholder = ({ className }) => (
       <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
     </div>
   </div>
-);
-
-const GithubIcon = (props) => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" {...props}>
-    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-  </svg>
-);
-
-const ExternalLinkIcon = (props) => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}>
-    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-    <polyline points="15,3 21,3 21,9"/>
-    <line x1="10" x2="21" y1="14" y2="3"/>
-  </svg>
-);
-
-const ChevronLeftIcon = (props) => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}>
-    <path d="M15 18l-6-6 6-6"/>
-  </svg>
-);
-
-const ChevronRightIcon = (props) => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}>
-    <path d="M9 18l6-6-6-6"/>
-  </svg>
-);
-
-const CloseIcon = (props) => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}>
-    <path d="M18 6L6 18M6 6l12 12"/>
-  </svg>
 );
 
 
@@ -91,16 +60,16 @@ const ProjectCard = ({ project, onCardClick, isImageLoaded }) => (
     onClick={() => onCardClick(project)}
   >
     <div className="relative">
-      <div className="relative aspect-video rounded-2xl overflow-hidden mb-6 bg-muted/10">
+      <div className="relative aspect-video rounded-2xl overflow-hidden mb-6 bg-muted/10 border-4 border-background shadow-2xl">
         {isImageLoaded(project.thumbnail) ? (
           <Image
             src={project.thumbnail}
             alt={project.title}
             fill
-            className="object-cover group-hover:scale-110 transition-transform duration-500"
+            className="object-cover group-hover:scale-110 transition-transform duration-500 rounded-xl"
           />
         ) : (
-          <ImagePlaceholder className="w-full h-full rounded-2xl" />
+          <ImagePlaceholder className="w-full h-full rounded-xl" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div className="absolute bottom-4 left-4 right-4 flex gap-2">
@@ -154,7 +123,7 @@ const ImageSwiper = ({ images, isImageLoaded }) => {
   const prevImage = () => setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
 
   return (
-    <div className="relative w-full  aspect-video rounded-2xl overflow-hidden bg-muted/10">
+    <div className="relative w-full  aspect-video rounded-2xl overflow-hidden bg-muted/10 border-4 border-background shadow-2xl">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIndex}
@@ -165,19 +134,19 @@ const ImageSwiper = ({ images, isImageLoaded }) => {
           className="relative w-full h-full"
         >
           {isImageLoaded(images[currentIndex]) ? (
-            <Image src={images[currentIndex]} alt={`Project image ${currentIndex + 1}`} fill className="object-cover" />
+            <Image src={images[currentIndex]} alt={`Project image ${currentIndex + 1}`} fill className="object-cover rounded-xl" />
           ) : (
-            <ImagePlaceholder className="w-full h-full" />
+            <ImagePlaceholder className="w-full h-full rounded-xl" />
           )}
         </motion.div>
       </AnimatePresence>
       {images.length > 1 && (
         <>
           <button onClick={(e) => { e.stopPropagation(); prevImage(); }} className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-background/50 backdrop-blur-sm hover:bg-background rounded-full flex items-center justify-center text-foreground transition-all shadow-lg z-10">
-            <ChevronLeftIcon />
+            <ChevronLeft size={20} />
           </button>
           <button onClick={(e) => { e.stopPropagation(); nextImage(); }} className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-background/50 backdrop-blur-sm hover:bg-background rounded-full flex items-center justify-center text-foreground transition-all shadow-lg z-10">
-            <ChevronRightIcon />
+            <ChevronRight size={20} />
           </button>
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
             {images.map((_, index) => (
@@ -219,7 +188,7 @@ const ProjectModal = ({ project, onClose, isImageLoaded }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <button onClick={onClose} className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-muted/50 hover:bg-muted transition-colors z-20" aria-label="Close modal">
-          <CloseIcon />
+          <X size={20} />
         </button>
 
         <div className="lg:grid lg:grid-cols-5 lg:gap-16 items-start">
@@ -255,14 +224,14 @@ const ProjectModal = ({ project, onClose, isImageLoaded }) => {
               {project.liveUrl && (
                 <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex-1">
                   <motion.button className="w-full px-6 py-3 lg:px-6 lg:py-4 text-sm lg:text-sm text-nowrap bg-primary text-primary-foreground rounded-xl font-medium hover:bg-primary/90 transition-colors flex items-center justify-center gap-2" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                    <ExternalLinkIcon />
+                    <ExternalLink size={18} />
                     <span>View Live</span>
                   </motion.button>
                 </Link>
               )}
               <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex-1">
                 <motion.button className="w-full px-6 py-3 lg:px-6 lg:py-4 text-sm lg:text-sm text-nowrap bg-muted/30 text-foreground rounded-xl font-medium hover:bg-muted/50 transition-colors flex items-center justify-center gap-2" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <GithubIcon />
+                  <Github size={18} />
                   <span>View Code</span>
                 </motion.button>
               </Link>
@@ -347,7 +316,7 @@ const Projects = () => {
             <Link href="https://github.com/sarimAbdelbari" target="_blank" rel="noopener noreferrer">
               <motion.button className="px-8 py-4 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-colors shadow-lg hover:shadow-xl inline-flex items-center gap-2" whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
                 <span>View More on GitHub</span>
-                <GithubIcon />
+                <Github size={18} />
               </motion.button>
             </Link>
           </motion.div>

@@ -1,6 +1,7 @@
 "use client";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { useState } from "react";
+import { ChevronUp } from "lucide-react";
 
 
 export function ScrollIndicator({ children }) {
@@ -60,9 +61,7 @@ export function ScrollIndicator({ children }) {
           transition={{ duration: 0.3 }}
           whileHover={{ scale: 1.1, opacity: 1 }}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M18 15l-6-6-6 6"/>
-          </svg>
+          <ChevronUp size={16} strokeWidth={3} />
         </motion.button>
       </motion.div>
 

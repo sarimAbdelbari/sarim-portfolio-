@@ -1,33 +1,27 @@
 import { useState, useEffect } from 'react';
 
 /**
- * Hook to detect mobile devices and enable performance mode
- * Returns shouldReduceMotion boolean to conditionally render expensive animations
+ * Hook to detect small screens and enable performance mode
+ * Works like CSS media queries - simple screen width check
  */
 export const usePerformanceMode = () => {
-  const [isMobile, setIsMobile] = useState(false);
   const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
 
   useEffect(() => {
-    // Check if device is mobile
-    const checkMobile = () => {
-      const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      const isSmallScreen = window.innerWidth < 768;
-      const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-      
-      return isMobileDevice || (isSmallScreen && hasTouchScreen);
+    const checkScreenSize = () => {
+      // Simple check: screen width < 768px (mobile/tablet breakpoint)
+      setShouldReduceMotion(window.innerWidth < 768);
     };
 
-    // Check user's motion preference
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
-    const mobile = checkMobile();
-    setIsMobile(mobile);
-    
-    // Enable performance mode on mobile OR if user prefers reduced motion
-    setShouldReduceMotion(mobile || prefersReducedMotion);
+    // Check on mount
+    checkScreenSize();
+
+    // Update on window resize
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  return { isMobile, shouldReduceMotion };
+  return { shouldReduceMotion };
 };
 

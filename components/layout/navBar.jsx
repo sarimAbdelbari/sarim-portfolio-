@@ -89,7 +89,7 @@ const NavBar = () => {
                     {/* Logo */}
                     <motion.div
                         className="cursor-pointer"
-                        onClick={() => scrollToSection('home')}
+                        onClick={() => window.location.href = '/'}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                     >

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState, useMemo } from "react";
 import { usePerformanceMode } from "@/components/hooks/usePerformanceMode";
+import { Send, FileText } from "lucide-react";
 
 export default function Hero() {
     // Performance mode for mobile devices
@@ -72,7 +73,7 @@ export default function Hero() {
     return (
         <section className="min-h-screen flex justify-center items-center flex-col lg:flex-row gap-12 px-3 lg:px-10 py-16 overflow-hidden mt-16 lg:mt-0 relative">
             
-            {/* Animated Background Skills - Only on desktop for performance */}
+            {/* Animated Background Skills - Disabled on mobile for performance */}
             {!shouldReduceMotion && (
                 <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
                     {backgroundSkills.map((skill, index) => (
@@ -176,16 +177,7 @@ export default function Hero() {
                         {/* Button content */}
                         <span className="relative z-10 flex items-center gap-2">
                             Contact Me
-                            <motion.svg 
-                                xmlns="http://www.w3.org/2000/svg" 
-                                width="20" 
-                                height="20" 
-                                viewBox="0 0 24 24" 
-                                fill="none" 
-                                stroke="currentColor" 
-                                strokeWidth="2" 
-                                strokeLinecap="round" 
-                                strokeLinejoin="round"
+                            <motion.div
                                 className="group-hover:translate-x-1 transition-transform duration-300"
                                 animate={{ 
                                     x: [0, 3, 0],
@@ -196,9 +188,8 @@ export default function Hero() {
                                     ease: "easeInOut"
                                 }}
                             >
-                                <path d="m3 3 3 9-3 9 19-9Z"/>
-                                <path d="m6 12 13 0"/>
-                            </motion.svg>
+                                <Send size={20} />
+                            </motion.div>
                         </span>
                         
                         {/* Pulsing glow ring */}
@@ -230,16 +221,7 @@ export default function Hero() {
                         {/* Button content */}
                         <span className="relative z-10 flex items-center gap-2">
                             View Resume
-                            <motion.svg 
-                                xmlns="http://www.w3.org/2000/svg" 
-                                width="20" 
-                                height="20" 
-                                viewBox="0 0 24 24" 
-                                fill="none" 
-                                stroke="currentColor" 
-                                strokeWidth="2" 
-                                strokeLinecap="round" 
-                                strokeLinejoin="round"
+                            <motion.div
                                 className="group-hover:scale-110 transition-transform duration-300"
                                 animate={{ 
                                     scale: [1, 1.05, 1],
@@ -251,12 +233,8 @@ export default function Hero() {
                                     delay: 0.5
                                 }}
                             >
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                <polyline points="14,2 14,8 20,8"/>
-                                <line x1="16" y1="13" x2="8" y2="13"/>
-                                <line x1="16" y1="17" x2="8" y2="17"/>
-                                <polyline points="10,9 9,9 8,9"/>
-                            </motion.svg>
+                                <FileText size={20} />
+                            </motion.div>
                         </span>
                         
                         {/* Pulsing glow ring */}
@@ -284,7 +262,7 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
             >
-                {/* Decorative elements - Simplified on mobile */}
+                {/* Decorative elements - Disabled on mobile for performance */}
                 {!shouldReduceMotion && (
                     <motion.div 
                         className="absolute -z-10 w-64 h-64 rounded-full bg-primary/10 blur-3xl"
@@ -324,7 +302,7 @@ export default function Hero() {
                         loading="eager"
                     />
                     
-                    {/* Tech stack floating elements - Only on desktop */}
+                    {/* Tech stack floating elements - Disabled on mobile for performance */}
                     {!shouldReduceMotion && (
                         <>
                     <motion.div 
@@ -421,6 +399,7 @@ export default function Hero() {
                     </motion.div>
                     </>
                     )}
+
                    
                 </motion.div>
             </motion.div>
