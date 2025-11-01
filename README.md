@@ -15,7 +15,7 @@ I'm **Sarim Kerroucha**, a passionate Full-Stack Developer with over 2 years of 
 - 🎓 **Bachelor's in Computer Science** - Université Djillali Liabes (2020-2023)
 - 💼 **Full Stack Developer** - Groupe Chiali (June 2024 - Present)
 - 🏆 **Capstone Project**: LinkedIn-inspired networking platform (17.5/20)
-- 🌱 **Specializations**: MERN Stack, System Architecture, API Development
+- 🌱 **Specializations**: (ReactJS/NextJs) (NodeJS/ExpressJs), System Architecture, API Development
 
 ## ✨ Features
 
@@ -29,7 +29,7 @@ I'm **Sarim Kerroucha**, a passionate Full-Stack Developer with over 2 years of 
 - **Advanced Image Preloading**: Custom loading system that preloads all assets before revealing content
 - **Next.js Image Optimization**: Automatic WebP/AVIF conversion and responsive images
 - **Smooth Loading Experience**: Cinema-style curtain animations with real-time progress tracking
-- **Optimized Animations**: Animations start only after content is fully loaded
+- **Optimized Animations**: Animations start only after the content is fully loaded
 
 ### 🎭 **Interactive Elements**
 - **Typewriter Effect**: Dynamic role switching animation
