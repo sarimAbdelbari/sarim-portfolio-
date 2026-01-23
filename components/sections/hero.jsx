@@ -210,7 +210,7 @@ export default function Hero() {
                         variant="outline" 
                         size="lg" 
                         className="relative rounded-full px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-medium cursor-pointer bg-background/80 backdrop-blur-sm text-foreground border-2 border-primary/40 shadow-lg hover:shadow-2xl transition-all duration-300 group overflow-hidden hover:border-primary hover:bg-primary/5"
-                        onClick={() => window.open('https://drive.google.com/file/d/1i3Ca4eqr8GafWu6EsI8p39ermS8k59s_/view?usp=drive_link', '_blank', 'noopener,noreferrer')}
+                        onClick={() => window.open('https://drive.google.com/file/d/1JKhuq-rUgZlNbTIEvrsX5sUVej-GVKT_/view', '_blank', 'noopener,noreferrer')}
                     >
                         {/* Animated glow background */}
                         <div className="absolute inset-0 bg-primary/5 blur-xl group-hover:bg-primary/10 transition-all duration-300" />
