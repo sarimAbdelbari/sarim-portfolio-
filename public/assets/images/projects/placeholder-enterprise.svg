@@ -1,0 +1,36 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="720" fill="#1e293b"/>
+  <rect width="1280" height="720" fill="url(#grid)" opacity="0.15"/>
+  
+  <!-- Grid pattern -->
+  <defs>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#334155" stroke-width="1"/>
+    </pattern>
+    <filter id="blur">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+  </defs>
+
+  <!-- Background blobs -->
+  <circle cx="300" cy="300" r="220" fill="#1e70ca" opacity="0.08" filter="url(#blur)"/>
+  <circle cx="980" cy="420" r="180" fill="#8c79c2" opacity="0.08" filter="url(#blur)"/>
+
+  <!-- Shield icon -->
+  <g transform="translate(570, 220)">
+    <path d="M70 10 L130 35 L130 90 C130 120 100 140 70 150 C40 140 10 120 10 90 L10 35 Z" stroke="#334155" stroke-width="2.5" fill="#1e293b"/>
+    <path d="M70 30 L110 50 L110 90 C110 112 90 128 70 136 C50 128 30 112 30 90 L30 50 Z" fill="#1e70ca" opacity="0.25"/>
+    <!-- Lock icon inside shield -->
+    <rect x="55" y="78" width="30" height="22" rx="3" fill="#94a3b8"/>
+    <path d="M62 78 L62 72 C62 64 78 64 78 72 L78 78" stroke="#94a3b8" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <!-- Label -->
+  <text x="640" y="435" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#f8fafc" text-anchor="middle" letter-spacing="2">ENTERPRISE PROJECT</text>
+  <text x="640" y="468" font-family="system-ui, sans-serif" font-size="14" fill="#64748b" text-anchor="middle" letter-spacing="1">CONFIDENTIAL � NDA PROTECTED</text>
+
+  <!-- Decorative lines -->
+  <line x1="440" y1="490" x2="564" y2="490" stroke="#334155" stroke-width="1"/>
+  <circle cx="640" cy="490" r="3" fill="#1e70ca"/>
+  <line x1="716" y1="490" x2="840" y2="490" stroke="#334155" stroke-width="1"/>
+</svg>

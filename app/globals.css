@@ -46,60 +46,60 @@
 :root {
   /* Base settings */
   --radius: 0.75rem;
-  
-  /* Main colors - using your blue to purple palette */
+
+  /* Brand palette */
   --blue-primary: #1e70ca;
   --blue-secondary: #3a85d9;
   --purple-light: #a479b8;
   --purple-medium: #8c79c2;
   --purple-dark: #6e63ac;
   --pink-accent: #c590c0;
-  
-  /* Light theme - softer, warmer tones (less bright/harsh) */
-  --background: #f5f5f0;
-  --foreground: #1a1a1a;
-  --card: #ebebdc;
-  --card-foreground: #1a1a1a;
-  --popover: #f0f0e8;
-  --popover-foreground: #1a1a1a;
-  
-  /* Primary - slightly darker for better contrast on light bg */
+
+  /* Light theme — cool slate palette, mirrors dark mode color temperature */
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+
+  /* Primary — same across both modes */
   --primary: #017afc;
   --primary-foreground: #ffffff;
-  
-  /* Secondary - subtle warm tinted background */
-  --secondary: #e8e8dc;
-  --secondary-foreground: #1a5fb8;
-  
-  /* Muted - warmer, softer grays */
-  --muted: #e5e5d8;
-  --muted-foreground: #525252;
-  
-  /* Accent - slightly darker purple for better contrast */
+
+  /* Secondary — cool slate surface */
+  --secondary: #e2e8f0;
+  --secondary-foreground: #475569;
+
+  /* Muted — cool gray, mirrors dark mode's blue-gray muted */
+  --muted: #e2e8f0;
+  --muted-foreground: #64748b;
+
+  /* Accent — purple, same across both modes */
   --accent: #9066a3;
   --accent-foreground: #ffffff;
-  
-  /* Utility colors */
+
+  /* Utility */
   --destructive: #dc2626;
-  --border: #d4d4c8;
-  --input: #e8e8dc;
+  --border: #cbd5e1;
+  --input: #e2e8f0;
   --ring: var(--purple-medium);
-  
-  /* Chart colors - adjusted for light mode */
+
+  /* Chart */
   --chart-1: #1a5fb8;
   --chart-2: #2563eb;
   --chart-3: #7c3aed;
   --chart-4: #a855f7;
   --chart-5: #c084fc;
-  
+
   /* Sidebar */
-  --sidebar: #ebebdc;
-  --sidebar-foreground: #1a1a1a;
+  --sidebar: #f1f5f9;
+  --sidebar-foreground: #0f172a;
   --sidebar-primary: #1a5fb8;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #9066a3;
   --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #d4d4c8;
+  --sidebar-border: #cbd5e1;
   --sidebar-ring: #1a5fb8;
 }
 

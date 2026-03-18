@@ -1,0 +1,40 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="720" fill="#111827"/>
+  <rect width="1280" height="720" fill="url(#dotgrid)" opacity="0.2"/>
+
+  <defs>
+    <pattern id="dotgrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="1.5" fill="#374151"/>
+    </pattern>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+  </defs>
+
+  <!-- Subtle glow -->
+  <circle cx="640" cy="360" r="300" fill="#3b82f6" opacity="0.05" filter="url(#glow)"/>
+
+  <!-- Monitor frame -->
+  <rect x="460" y="200" width="360" height="220" rx="12" stroke="#374151" stroke-width="2.5" fill="#1f2937"/>
+  <rect x="476" y="216" width="328" height="188" rx="6" fill="#111827"/>
+  <!-- Screen content lines -->
+  <rect x="492" y="232" width="180" height="10" rx="3" fill="#374151" opacity="0.7"/>
+  <rect x="492" y="252" width="140" height="8" rx="3" fill="#374151" opacity="0.5"/>
+  <rect x="492" y="272" width="296" height="60" rx="4" fill="#1e3a5f" opacity="0.6"/>
+  <rect x="492" y="344" width="120" height="8" rx="3" fill="#374151" opacity="0.4"/>
+  <rect x="492" y="364" width="200" height="8" rx="3" fill="#374151" opacity="0.4"/>
+  <!-- Monitor stand -->
+  <rect x="620" y="420" width="40" height="26" rx="2" fill="#374151"/>
+  <rect x="584" y="444" width="112" height="10" rx="4" fill="#374151"/>
+
+  <!-- Label -->
+  <text x="640" y="532" font-family="system-ui, sans-serif" font-size="18" font-weight="600" fill="#9ca3af" text-anchor="middle" letter-spacing="3">SCREENSHOT COMING SOON</text>
+
+  <!-- Dots decoration -->
+  <circle cx="580" cy="560" r="2.5" fill="#3b82f6" opacity="0.5"/>
+  <circle cx="600" cy="560" r="2.5" fill="#3b82f6" opacity="0.3"/>
+  <circle cx="620" cy="560" r="2.5" fill="#3b82f6" opacity="0.2"/>
+  <circle cx="660" cy="560" r="2.5" fill="#3b82f6" opacity="0.2"/>
+  <circle cx="680" cy="560" r="2.5" fill="#3b82f6" opacity="0.3"/>
+  <circle cx="700" cy="560" r="2.5" fill="#3b82f6" opacity="0.5"/>
+</svg>

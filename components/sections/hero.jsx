@@ -125,8 +125,8 @@ export default function Hero() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.3 }}
-                >
-                    Sarim Kerroucha <br/> <span className="text-secondary text-lg">Full-Stack Developer</span>
+                    >
+                    Sarim Kerroucha <br/> <span className="text-muted-foreground text-lg">Full-Stack Developer</span>
                 </motion.h1>
                 
                 <motion.h2 

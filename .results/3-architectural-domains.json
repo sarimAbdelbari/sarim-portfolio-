@@ -1,0 +1,172 @@
+{
+  "ui-components": {
+    "required_patterns": {
+      "client-directive": "All interactive components must start with 'use client' directive at the top of the file",
+      "class-variance-authority": "UI primitives must use CVA (class-variance-authority) for variant management with defined variant types",
+      "radix-slot-composition": "Composable components should integrate @radix-ui/react-slot for asChild prop pattern",
+      "cn-utility": "All className props must use cn() utility from lib/utils for intelligent class merging"
+    },
+    "architectural_constraints": {
+      "component-structure": "Follow pattern: imports → helper components → main component → export. Helper components defined above main component within same file",
+      "variants-pattern": "Define variants using CVA with default variants specified. Common variants: default, destructive, outline, secondary, ghost, link",
+      "accessibility": "Include proper ARIA attributes, focus states, keyboard navigation support, and screen reader compatibility",
+      "composition-over-props": "Use Radix Slot pattern (asChild prop) to allow component composition without wrapper div proliferation"
+    }
+  },
+  "animation-system": {
+    "required_patterns": {
+      "framer-motion": "All animations must use Framer Motion library exclusively. No CSS animations or transitions for complex animations",
+      "performance-mode-integration": "Complex animations must respect usePerformanceMode hook - disable heavy animations when shouldReduceMotion is true (mobile < 768px)",
+      "animate-presence": "Exit animations require AnimatePresence wrapper with mode='wait' for page transitions",
+      "viewport-once": "Scroll-triggered animations should use whileInView with viewport={{ once: true }} to prevent re-triggering on scroll"
+    },
+    "architectural_constraints": {
+      "animation-structure": "Use initial, animate, exit, transition props. Define keyframes as arrays: animate={{ y: [0, -10, 0] }}",
+      "stagger-pattern": "Parent-child staggered animations use variants pattern with staggerChildren in parent transition",
+      "performance-thresholds": "Background decorative animations (orbs, particles) must be conditionally rendered based on !shouldReduceMotion check",
+      "timing-functions": "Prefer ease functions: 'easeOut', 'easeInOut', [0.22, 1, 0.36, 1] (custom cubic-bezier for curtain effects)",
+      "duration-guidelines": "Fast interactions: 0.2-0.3s, Page transitions: 0.5-1.2s, Background loops: 10-30s"
+    }
+  },
+  "lazy-loading": {
+    "required_patterns": {
+      "intersection-observer": "All lazy loading must use custom hooks (useLazyLoad or useLazyLoadMultiple) built on IntersectionObserver API",
+      "ref-attachment": "Attach returned ref to container element: const { ref, isLoaded } = useLazyLoad(); <div ref={ref}>",
+      "conditional-rendering": "Images must conditionally render based on loading state: isImageLoaded(src) ? <Image /> : <Placeholder />",
+      "image-placeholder": "Unloaded images must show ImagePlaceholder component with spinner animation"
+    },
+    "architectural_constraints": {
+      "hook-configuration": "useLazyLoad accepts options: { threshold: 0.1, rootMargin: '50px', fallbackSrc: null }",
+      "multiple-images-pattern": "For galleries, use useLazyLoadMultiple to batch-load images with 100ms stagger delay between loads",
+      "error-handling": "Hooks must handle load failures gracefully with hasError state and optional fallbackSrc",
+      "preload-strategy": "Critical above-fold images (hero section) should use priority={true} and loading='eager' instead of lazy loading"
+    }
+  },
+  "theming": {
+    "required_patterns": {
+      "next-themes-provider": "Theme management exclusively via next-themes library wrapped in ThemeProvider component",
+      "css-variables": "All colors defined as CSS custom properties in :root and .dark selectors in globals.css",
+      "semantic-tokens": "Use semantic color tokens (--color-primary, --color-background) never raw hex values in components",
+      "theme-toggle-component": "Theme switching via toggle-mode.jsx component with Sun/Moon icons from lucide-react"
+    },
+    "architectural_constraints": {
+      "provider-configuration": "ThemeProvider in root layout with: attribute='class', defaultTheme='dark', enableSystem={false}, disableTransitionOnChange",
+      "color-system": "18+ semantic tokens: primary, secondary, accent, muted, destructive, background, foreground, border, input, ring, chart-1 through chart-5, sidebar variants",
+      "transition-handling": "disableTransitionOnChange prevents flash during theme switches. Components handle transitions via CSS transition properties",
+      "palette-structure": "Blue-to-purple gradient palette: #1e70ca (blue-primary) → #3a85d9 → #8c79c2 → #a479b8 (purple-light)"
+    }
+  },
+  "image-optimization": {
+    "required_patterns": {
+      "next-image-component": "All images must use Next.js Image component from next/image for automatic optimization",
+      "fill-or-dimensions": "Specify either width/height props OR fill prop with parent position:relative. Never omit sizing",
+      "priority-flag": "Above-fold images (hero section) must include priority={true} prop to prevent LCP issues",
+      "object-fit-specification": "Images with fill prop require className='object-cover' or 'object-contain' for proper sizing"
+    },
+    "architectural_constraints": {
+      "format-conversion": "Next.js automatically converts to WebP/AVIF. No manual format specification needed",
+      "responsive-sizing": "Use responsive aspect ratios: aspect-video for project thumbnails, fixed dimensions for logos/icons",
+      "loading-strategy": "Hero images: priority={true} loading='eager', Gallery images: lazy loading via useLazyLoad hook",
+      "alt-text-requirement": "All images must have descriptive alt text for accessibility and SEO"
+    }
+  },
+  "data-management": {
+    "required_patterns": {
+      "centralized-data-file": "All static content data must be exported from lib/data.js as named exports (categories, projectsData)",
+      "array-based-structure": "Content stored as arrays of objects with consistent shape across all entries",
+      "id-based-references": "All data objects include numeric id field for React key props and lookups",
+      "category-taxonomy": "Categories defined with: id (string), name (string), icon (emoji string)"
+    },
+    "architectural_constraints": {
+      "project-shape": "Projects: { id, title, description, thumbnail, images[], technologies[], category, githubUrl, liveUrl, featured, year }",
+      "no-api-calls": "Pure static data - no external API calls, database queries, or dynamic fetching",
+      "asset-paths": "Asset paths relative to public/: '/assets/images/projects/...', '/assets/skills/...'",
+      "filtering-pattern": "Use Array.filter() with useMemo() for category filtering to prevent unnecessary re-computation"
+    }
+  },
+  "routing": {
+    "required_patterns": {
+      "app-router-structure": "Next.js 15 App Router architecture - all routes in app/ directory",
+      "section-based-navigation": "Single-page sections with smooth scroll navigation via anchor IDs (#home, #about, #skills, #projects, #blog, #contact)",
+      "smooth-scroll-implementation": "window.scrollTo({ top: targetY, behavior: 'smooth' }) for section navigation",
+      "route-groups": "Optional route grouping with (pages) folder for organizational purposes (doesn't affect URL)"
+    },
+    "architectural_constraints": {
+      "layout-hierarchy": "Root layout.jsx wraps all pages with providers, fonts, and shell components (NavBar, SideMenu, Container)",
+      "metadata-definition": "SEO metadata defined in layout.jsx export const metadata = { title, description, keywords, openGraph, icons }",
+      "page-structure": "Pages export default function PageName() - named exports for metadata only",
+      "active-section-tracking": "NavBar tracks active section via scroll position and highlights corresponding nav item"
+    }
+  },
+  "custom-hooks": {
+    "required_patterns": {
+      "use-prefix": "All custom hooks must follow 'use' naming convention (useLazyLoad, usePerformanceMode)",
+      "hooks-directory": "Custom hooks in components/hooks/ directory with .js extension",
+      "return-object-pattern": "Return object with descriptive keys: { ref, isLoaded, hasError } not arrays",
+      "client-only": "Include 'use client' directive since hooks use useState, useEffect, useRef"
+    },
+    "architectural_constraints": {
+      "reusability-principle": "Extract cross-cutting concerns (lazy loading, performance checks) into reusable hooks",
+      "single-responsibility": "Each hook addresses one specific concern - don't combine unrelated functionality",
+      "cleanup-pattern": "Always return cleanup function from useEffect to prevent memory leaks (event listeners, observers)",
+      "dependency-array-accuracy": "useEffect dependencies must be complete and accurate to prevent stale closures"
+    }
+  },
+  "styling": {
+    "required_patterns": {
+      "tailwind-utilities": "All styling via Tailwind CSS 4 utility classes - no inline styles except for dynamic values (style prop)",
+      "design-token-usage": "Use semantic Tailwind classes: bg-primary, text-foreground, border-border (maps to CSS variables)",
+      "responsive-modifiers": "Mobile-first approach: base classes for mobile, md:, lg:, xl: for larger screens",
+      "state-modifiers": "Leverage Tailwind state variants: hover:, focus:, group-hover:, dark: for interactions"
+    },
+    "architectural_constraints": {
+      "custom-theme-inline": "Theme configuration via @theme inline directive in globals.css - no tailwind.config.js",
+      "css-variables-bridge": "Tailwind classes map to CSS custom properties: --color-primary, --radius, --font-sans",
+      "animation-utilities": "Use tw-animate-css library for additional animation utilities beyond Tailwind defaults",
+      "no-arbitrary-values": "Avoid arbitrary values ([#ff0000]) - define custom properties in globals.css for reusable colors",
+      "gradient-pattern": "Complex gradients: bg-gradient-to-r from-[#1a5fb8] via-[#1e70ca] to-[#3a85d9] for consistent brand colors"
+    }
+  },
+  "component-composition": {
+    "required_patterns": {
+      "section-component-pattern": "Large page sections are separate components in components/sections/",
+      "helper-component-colocate": "Small helper components (ProjectCard, ImageSwiper) defined in same file above main component",
+      "props-destructuring": "Destructure props in function signature: function Hero({ title, subtitle })",
+      "children-prop-pattern": "Layout components (Container, LoadingWrapper) accept children prop for wrapping content"
+    },
+    "architectural_constraints": {
+      "file-organization": "One main export per file - helper components are implementation details not exported",
+      "prop-drilling-limit": "Max 2 levels of prop drilling - beyond that, use composition or context",
+      "component-size-guideline": "Main section components: 200-450 lines, UI primitives: 50-100 lines, Helpers: 20-80 lines",
+      "separation-of-concerns": "Sections handle layout and data, UI components handle reusable patterns, hooks handle logic"
+    }
+  },
+  "state-management": {
+    "required_patterns": {
+      "local-state-default": "Use useState for component-local state (UI toggles, form inputs, selected items)",
+      "usememo-for-derived": "Compute derived state with useMemo when expensive filtering/transformation is needed",
+      "lifting-state": "Lift state to common parent when sibling components need to share state",
+      "context-for-cross-cutting": "Use React Context only for truly global concerns (theme, loading status)"
+    },
+    "architectural_constraints": {
+      "no-global-state-library": "No Redux, Zustand, or similar - React hooks and Context sufficient for portfolio scope",
+      "state-colocation": "Keep state as local as possible - only lift when necessary",
+      "boolean-state-pattern": "Use boolean states for simple toggles: isLoading, isOpen, hasError",
+      "controlled-components": "Form inputs and interactive elements should be controlled (value + onChange pattern)"
+    }
+  },
+  "performance-optimization": {
+    "required_patterns": {
+      "performance-mode-hook": "Import and use usePerformanceMode() in any component with heavy animations",
+      "conditional-animation-rendering": "Wrap expensive animations in {!shouldReduceMotion && ...} conditional",
+      "usememo-for-computations": "Wrap expensive computations (filtering, mapping large arrays) in useMemo with proper deps",
+      "lazy-load-below-fold": "Images and content below fold must use lazy loading hooks"
+    },
+    "architectural_constraints": {
+      "mobile-breakpoint": "Performance mode triggers at < 768px screen width (Tailwind md breakpoint)",
+      "animation-reduction-targets": "Disable: background particles, floating elements, complex transforms on mobile",
+      "keep-core-animations": "Maintain: hover effects, entrance animations, page transitions even in performance mode",
+      "preload-critical-path": "Hero section images preload with priority={true}, other sections lazy load"
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "react-section-components": [
+    "./components/sections/hero.jsx",
+    "./components/sections/aboutMe.jsx",
+    "./components/sections/skills.jsx",
+    "./components/sections/projects.jsx",
+    "./components/sections/blog.jsx",
+    "./components/sections/contact.jsx",
+    "./components/sections/comingSoonBlog.jsx"
+  ],
+  "react-layout-components": [
+    "./components/layout/navBar.jsx",
+    "./components/layout/sidemenu.jsx",
+    "./components/layout/loadingWarpper.jsx",
+    "./components/layout/scrollIndicator.jsx",
+    "./components/layout/lineSperator.jsx"
+  ],
+  "react-ui-components": [
+    "./components/ui/button.jsx",
+    "./components/ui/container.jsx",
+    "./components/ui/toggle-mode.jsx",
+    "./components/ui/dropdown-menu.jsx"
+  ],
+  "react-motion-primitives": [
+    "./components/motion-primitives/infinite-slider.jsx",
+    "./components/motion-primitives/progressive-blur.jsx"
+  ],
+  "react-providers": [
+    "./components/provider/theme-provider.jsx"
+  ],
+  "custom-hooks": [
+    "./components/hooks/useLazyLoad.js",
+    "./components/hooks/usePerformanceMode.js"
+  ],
+  "next-pages": [
+    "./app/page.jsx",
+    "./app/(pages)/blog/page.jsx"
+  ],
+  "next-layouts": [
+    "./app/layout.jsx"
+  ],
+  "styles": [
+    "./app/globals.css"
+  ],
+  "utility-functions": [
+    "./lib/utils.js"
+  ],
+  "data-management": [
+    "./lib/data.js"
+  ],
+  "configuration-files": [
+    "./package.json",
+    "./next.config.mjs",
+    "./postcss.config.mjs",
+    "./eslint.config.mjs",
+    "./jsconfig.json",
+    "./components.json"
+  ],
+  "documentation": [
+    "./README.md",
+    "./refrance.md"
+  ],
+  "version-control": [
+    "./.gitignore"
+  ],
+  "static-assets-skills": [
+    "./public/assets/skills/express.svg",
+    "./public/assets/skills/git.svg",
+    "./public/assets/skills/github.svg",
+    "./public/assets/skills/javascript.svg",
+    "./public/assets/skills/mongodb.svg",
+    "./public/assets/skills/nextdotjs.svg"
+  ],
+  "static-assets-svg": [
+    "./public/assets/svg/nextjs-svgrepo-com.svg",
+    "./public/assets/svg/nodejs-svgrepo-com.svg",
+    "./public/assets/svg/reactjs-svgrepo-com.svg",
+    "./public/assets/svg/typescript-official-svgrepo-com.svg"
+  ],
+  "static-assets-images": [
+    "./public/assets/images/GuibleHero.png",
+    "./public/assets/images/projects/Fikrat.png",
+    "./public/assets/images/projects/PyramidDoc1.png",
+    "./public/assets/images/projects/PyramidDoc2.png",
+    "./public/assets/images/projects/PyramidDoc3.png",
+    "./public/assets/images/projects/VitaLife.png",
+    "./public/assets/images/projects/Vitalife1.png",
+    "./public/assets/images/projects/Vitalife2.png",
+    "./public/assets/images/projects/Vitalife3.png",
+    "./public/assets/images/projects/Feather1.jpg",
+    "./public/assets/images/projects/Feather2.png",
+    "./public/assets/images/projects/Feather3.png",
+    "./public/assets/images/projects/PortfolioProject1.png",
+    "./public/assets/images/projects/PortfolioProject2.png"
+  ]
+}
