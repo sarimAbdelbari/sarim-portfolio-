@@ -153,7 +153,7 @@ export default function Hero() {
                     <motion.span className="text-foreground font-medium tracking-wide"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 0.3, duration: 0.5 }} >   I'm not just a developer—I code like I'm in a Ghibli movie. 🎋✨</motion.span>
+                    transition={{ delay: 0.3, duration: 0.5 }} >   I'm not just a developer I code like I'm in a Ghibli movie. 🎋✨</motion.span>
                 </motion.p>
                 
                 <motion.div
