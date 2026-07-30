@@ -1,55 +1,123 @@
 "use client";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { usePerformanceMode } from "@/components/hooks/usePerformanceMode";
-import { Github, Linkedin, Facebook, Instagram, Send } from "lucide-react";
+import { Send } from "lucide-react";
+
+const INITIAL_FORM = {
+  name: "",
+  email: "",
+  subject: "",
+  message: "",
+};
+
+const socialLinks = [
+  {
+    name: "GitHub",
+    url: "https://github.com/sarimAbdelbari",
+    color: "#E6EDF3",
+    hoverBg: "rgba(230, 237, 243, 0.12)",
+    iconSrc: "/assets/svg/github.svg",
+  },
+  {
+    name: "LinkedIn",
+    url: "https://www.linkedin.com/in/kerroucha-abdelbari-sarim/",
+    color: "#0A66C2",
+    hoverBg: "rgba(10, 102, 194, 0.12)",
+    iconSrc: "/assets/svg/linkedin-svgrepo-com.svg",
+  },
+  {
+    name: "Dev.to",
+    url: "https://dev.to/sarimkerroucha",
+    color: "#FFFFFF",
+    hoverBg: "rgba(255, 255, 255, 0.1)",
+    iconSrc: "/assets/svg/dev-to-svgrepo-com.svg",
+  },
+  {
+    name: "X",
+    url: "https://x.com/SarimAbdelbari",
+    color: "#E7E9EA",
+    hoverBg: "rgba(231, 233, 234, 0.12)",
+    iconSrc: "/assets/svg/X_logo_2023.svg",
+  },
+  {
+    name: "Instagram",
+    url: "https://www.instagram.com/sarimabdelbari/",
+    color: "#E4405F",
+    hoverBg: "rgba(228, 64, 95, 0.12)",
+    iconSrc: "/assets/svg/instagram-2016-logo-svgrepo-com.svg",
+  },
+  {
+    name: "Facebook",
+    url: "https://www.facebook.com/SarimAbdelbari",
+    color: "#1877F2",
+    hoverBg: "rgba(24, 119, 242, 0.12)",
+    iconSrc: "/assets/svg/facebook-network-communication-internet-interaction-svgrepo-com.svg",
+  },
+];
 
 const Contact = () => {
   // Performance mode for mobile devices
   const { shouldReduceMotion } = usePerformanceMode();
   const [hoveredSocial, setHoveredSocial] = useState(null);
+  const [form, setForm] = useState(INITIAL_FORM);
+  const [status, setStatus] = useState("idle");
+  const [feedback, setFeedback] = useState("");
 
-  const socialLinks = [
-    {
-      name: "GitHub",
-      url: "https://github.com/sarimAbdelbari",
-      icon: <Github size={24} />
-    },
-    {
-      name: "LinkedIn",
-      url: "https://linkedin.com/in/sarim-kerroucha",
-      icon: <Linkedin size={24} />
-    },
-    {
-      name: "Dev.to",
-      url: "https://dev.to/sarimkerroucha",
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M7.42 10.05c-.18-.16-.46-.23-.84-.23H6.1v4.36h.48c.38 0 .66-.07.84-.23.18-.16.27-.42.27-.78v-2.34c0-.36-.09-.62-.27-.78zm15.44-8.83A2.41 2.41 0 0 0 20.44 0H3.56a2.41 2.41 0 0 0-2.42 2.42v19.16A2.41 2.41 0 0 0 3.56 24h16.88a2.41 2.41 0 0 0 2.42-2.42V2.42zM8.21 15.74c-.25.24-.54.43-.88.57-.34.14-.73.21-1.17.21H4.8V7.48h1.38c.44 0 .83.07 1.17.21.34.14.63.33.88.57.25.24.44.53.57.87.13.34.2.72.2 1.13v3.98c0 .41-.07.79-.2 1.13a2.3 2.3 0 0 1-.57.87zm6.89-2.58v-1.09h-2.5v1.09h.9v3.24h-.9v1.09h2.5v-1.09h-.9v-3.24h.9zm4.25 0v-1.09h-2.5v1.09h.9v3.24h-.9v1.09h2.5v-1.09h-.9v-3.24h.9z"/>
-        </svg>
-      )
-    },
-    {
-      name: "Facebook",
-      url: "https://facebook.com/sarimkerroucha",
-      icon: <Facebook size={24} />
-    },
-    {
-      name: "Instagram",
-      url: "https://www.instagram.com/sarimabdebari",
-      icon: <Instagram size={24} />
-    },
-    {
-      name: "X",
-      url: "https://x.com/sarimabdebari",
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-        </svg>
-      )
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setStatus("loading");
+    setFeedback("");
+
+    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+
+    if (!accessKey) {
+      setStatus("error");
+      setFeedback("Contact form is not configured.");
+      return;
     }
-  ];
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: form.name.trim(),
+          email: form.email.trim(),
+          subject: form.subject.trim(),
+          message: form.message.trim(),
+        }),
+      });
+
+      const result = await response.json().catch(() => null);
+
+      if (!response.ok || !result?.success) {
+        setStatus("error");
+        setFeedback(
+          result?.message || "Failed to send message. Please try again."
+        );
+        return;
+      }
+
+      setStatus("success");
+      setFeedback("Message sent successfully. I'll get back to you soon!");
+      setForm(INITIAL_FORM);
+    } catch {
+      setStatus("error");
+      setFeedback("Something went wrong. Please try again.");
+    }
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -204,7 +272,7 @@ const Contact = () => {
       )}
 
       <motion.div
-        className="max-w-4xl mx-auto relative z-10 text-center"
+        className="max-w-6xl mx-auto relative z-10 text-center"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -215,8 +283,6 @@ const Contact = () => {
           className="mb-16"
           variants={itemVariants}
         >
-         
-
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             <span className="border-b-4 border-primary pb-2">Contact</span>
           </h2>
@@ -241,80 +307,226 @@ const Contact = () => {
             </p>
           </motion.div>
 
-          {/* Get in Touch Button */}
-          <motion.div
-            variants={itemVariants}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Button 
-              size="lg" 
-              className="relative rounded-full px-8 md:px-12 py-4 md:py-6 text-lg md:text-xl font-medium cursor-pointer bg-gradient-to-r from-[#1a5fb8] via-[#1e70ca] to-[#3a85d9] text-white border-0 shadow-lg hover:shadow-2xl transition-all duration-300 group overflow-hidden"
-              onClick={() => window.location.href = 'mailto:sarimabdelbari@gmail.com'}
+          {/* Form + Socials: stacked on mobile, two columns on desktop */}
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-12 lg:items-start text-left">
+            {/* Contact Form */}
+            <motion.form
+              onSubmit={handleSubmit}
+              className="w-full space-y-4"
+              variants={itemVariants}
             >
-              {/* Animated glow background */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#1a5fb8] via-[#1e70ca] to-[#3a85d9] opacity-75 blur-xl group-hover:opacity-100 transition-all duration-300" />
-              
-              {/* Shimmer effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12" />
-              
-              {/* Button content */}
-              <span className="relative z-10 flex items-center gap-3">
-                Get in touch!
-                <motion.div
-                  className="group-hover:translate-x-1 transition-transform duration-300"
-                  animate={{ 
-                    x: [0, 3, 0],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                >
-                  <Send size={24} />
-                </motion.div>
-              </span>
-            </Button>
-          </motion.div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-2">
+                  <label htmlFor="name" className="text-sm font-medium text-foreground">
+                    Name
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    required
+                    maxLength={100}
+                    value={form.name}
+                    onChange={handleChange}
+                    disabled={status === "loading"}
+                    autoComplete="name"
+                    className="w-full rounded-xl border border-border bg-background/60 px-4 py-3 text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30 disabled:opacity-60"
+                    placeholder="Your name"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="email" className="text-sm font-medium text-foreground">
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    maxLength={254}
+                    value={form.email}
+                    onChange={handleChange}
+                    disabled={status === "loading"}
+                    autoComplete="email"
+                    className="w-full rounded-xl border border-border bg-background/60 px-4 py-3 text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30 disabled:opacity-60"
+                    placeholder="you@example.com"
+                  />
+                </div>
+              </div>
 
-          {/* Social Media Links */}
-          <motion.div
-            className="space-y-8"
-            variants={itemVariants}
-          >
-            <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6 max-w-xl mx-auto">
-              {socialLinks.map((social, index) => (
-                <motion.a
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative w-14 h-14 md:w-16 md:h-16 bg-background/50 backdrop-blur-sm border border-border rounded-full flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all duration-300 group shadow-lg hover:shadow-xl"
-                  onHoverStart={() => setHoveredSocial(social.name)}
-                  onHoverEnd={() => setHoveredSocial(null)}
-                  whileHover={{ scale: 1.1, y: -5 }}
-                  whileTap={{ scale: 0.95 }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
+              <div className="space-y-2">
+                <label htmlFor="subject" className="text-sm font-medium text-foreground">
+                  Subject
+                </label>
+                <input
+                  id="subject"
+                  name="subject"
+                  type="text"
+                  required
+                  maxLength={200}
+                  value={form.subject}
+                  onChange={handleChange}
+                  disabled={status === "loading"}
+                  className="w-full rounded-xl border border-border bg-background/60 px-4 py-3 text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30 disabled:opacity-60"
+                  placeholder="What is this about?"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label htmlFor="message" className="text-sm font-medium text-foreground">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  maxLength={5000}
+                  rows={5}
+                  value={form.message}
+                  onChange={handleChange}
+                  disabled={status === "loading"}
+                  className="w-full resize-y rounded-xl border border-border bg-background/60 px-4 py-3 text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30 disabled:opacity-60"
+                  placeholder="Tell me about your project or idea..."
+                />
+              </div>
+
+              {feedback && (
+                <p
+                  role="status"
+                  className={`text-sm ${
+                    status === "success" ? "text-emerald-500" : "text-destructive"
+                  }`}
                 >
-                  <div className="text-muted-foreground group-hover:text-primary transition-colors duration-300">
-                    {social.icon}
-                  </div>
-                  {hoveredSocial === social.name && (
-                    <motion.span
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="absolute -bottom-8 text-xs font-medium text-primary whitespace-nowrap"
+                  {feedback}
+                </p>
+              )}
+
+              <motion.div
+                className="pt-2 flex justify-center lg:justify-start"
+                whileHover={{ scale: status === "loading" ? 1 : 1.05 }}
+                whileTap={{ scale: status === "loading" ? 1 : 0.95 }}
+              >
+                <Button
+                  type="submit"
+                  size="lg"
+                  disabled={status === "loading"}
+                  className="relative rounded-full px-8 md:px-12 py-4 md:py-6 text-lg md:text-xl font-medium cursor-pointer bg-gradient-to-r from-[#1a5fb8] via-[#1e70ca] to-[#3a85d9] text-white border-0 shadow-lg hover:shadow-2xl transition-all duration-300 group overflow-hidden disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#1a5fb8] via-[#1e70ca] to-[#3a85d9] opacity-75 blur-xl group-hover:opacity-100 transition-all duration-300" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12" />
+                  <span className="relative z-10 flex items-center gap-3">
+                    {status === "loading" ? "Sending..." : "Get in touch!"}
+                    <motion.div
+                      className="group-hover:translate-x-1 transition-transform duration-300"
+                      animate={{ x: [0, 3, 0] }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
                     >
+                      <Send size={24} />
+                    </motion.div>
+                  </span>
+                </Button>
+              </motion.div>
+            </motion.form>
+
+            {/* Social Media Links */}
+            <motion.div
+              className="space-y-5"
+              variants={itemVariants}
+            >
+              <h4 className="text-lg font-semibold text-foreground text-center lg:text-left">
+                Find me on
+              </h4>
+
+              {/* Mobile: centered icon wrap */}
+              <div className="flex flex-wrap justify-center items-center gap-4 md:gap-5 lg:hidden">
+                {socialLinks.map((social, index) => (
+                  <motion.a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.name}
+                    className="relative w-14 h-14 backdrop-blur-sm border border-border rounded-full flex items-center justify-center bg-background/50 transition-all duration-300 group shadow-lg hover:shadow-xl"
+                    style={{
+                      borderColor:
+                        hoveredSocial === social.name
+                          ? `${social.color}80`
+                          : undefined,
+                      backgroundColor:
+                        hoveredSocial === social.name
+                          ? social.hoverBg
+                          : undefined,
+                    }}
+                    onHoverStart={() => setHoveredSocial(social.name)}
+                    onHoverEnd={() => setHoveredSocial(null)}
+                    whileHover={{ scale: 1.1, y: -5 }}
+                    whileTap={{ scale: 0.95 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                  >
+                    <Image
+                      src={social.iconSrc}
+                      alt={social.name}
+                      width={28}
+                      height={28}
+                      className="h-7 w-7 object-contain"
+                    />
+                    {hoveredSocial === social.name && (
+                      <motion.span
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="absolute -bottom-8 text-xs font-medium whitespace-nowrap"
+                        style={{ color: social.color }}
+                      >
+                        {social.name}
+                      </motion.span>
+                    )}
+                  </motion.a>
+                ))}
+              </div>
+
+              {/* Desktop: vertical list with icon + label */}
+              <div className="hidden lg:flex flex-col gap-3">
+                {socialLinks.map((social, index) => (
+                  <motion.a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 rounded-xl border border-border bg-background/50 backdrop-blur-sm px-4 py-3 transition-all duration-300 group shadow-md hover:shadow-lg"
+                    whileHover={{
+                      x: 4,
+                      backgroundColor: social.hoverBg,
+                      borderColor: `${social.color}80`,
+                    }}
+                    whileTap={{ scale: 0.98 }}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.08, duration: 0.4 }}
+                  >
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-background/60">
+                      <Image
+                        src={social.iconSrc}
+                        alt=""
+                        width={24}
+                        height={24}
+                        className="h-6 w-6 object-contain"
+                        aria-hidden="true"
+                      />
+                    </span>
+                    <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors duration-300">
                       {social.name}
-                    </motion.span>
-                  )}
-                </motion.a>
-              ))}
-            </div>
-          </motion.div>
+                    </span>
+                  </motion.a>
+                ))}
+              </div>
+            </motion.div>
+          </div>
 
           {/* Footer Message */}
           <motion.div

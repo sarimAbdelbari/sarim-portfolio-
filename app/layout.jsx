@@ -6,6 +6,7 @@ import Container from "@/components/ui/container";
 import NavBar from "@/components/layout/navBar";
 import { ScrollIndicator } from "@/components/layout/scrollIndicator";
 import SideMenu from "@/components/layout/sidemenu";
+import WhatsAppButton from "@/components/layout/whatsappButton";
 
 const inter = Inter({
   weight: ['400', '500', '600', '700'],
@@ -56,6 +57,7 @@ export default function RootLayout({ children }) {
             <ScrollIndicator>
               <NavBar />
               <SideMenu/>
+              <WhatsAppButton />
               <Container>
                 {children}
               </Container>
