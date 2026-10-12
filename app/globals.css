@@ -37,6 +37,7 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-teal: var(--teal);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -44,112 +45,104 @@
 }
 
 :root {
+  color-scheme: light;
   /* Base settings */
   --radius: 0.75rem;
 
-  /* Brand palette */
-  --blue-primary: #1e70ca;
-  --blue-secondary: #3a85d9;
-  --purple-light: #a479b8;
-  --purple-medium: #8c79c2;
-  --purple-dark: #6e63ac;
-  --pink-accent: #c590c0;
+  /* Brand palette — shared across both themes */
+  --navy: #02122d;
+  --teal: #2596be;
+  --gold: #bb7f2c;
+  --gold-soft: #deb049;
+  --ice: #eafaff;
 
-  /* Light theme — cool slate palette, mirrors dark mode color temperature */
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  /* Light theme — navy text on lifted ice, same gold and teal */
+  --background: #f4f8fb;
+  --foreground: #02122d;
   --card: #ffffff;
-  --card-foreground: #0f172a;
+  --card-foreground: #02122d;
   --popover: #ffffff;
-  --popover-foreground: #0f172a;
+  --popover-foreground: #02122d;
 
-  /* Primary — same across both modes */
-  --primary: #017afc;
-  --primary-foreground: #ffffff;
+  /* Deepened bronze so small text stays readable on a light page */
+  --primary: #8a5c16;
+  --primary-foreground: #f4f8fb;
 
-  /* Secondary — cool slate surface */
-  --secondary: #e2e8f0;
-  --secondary-foreground: #475569;
+  /* Pale teal wash */
+  --secondary: #e7f3f7;
+  --secondary-foreground: #0c4f68;
 
-  /* Muted — cool gray, mirrors dark mode's blue-gray muted */
-  --muted: #e2e8f0;
-  --muted-foreground: #64748b;
+  --muted: #e7eef3;
+  --muted-foreground: #3e5568;
 
-  /* Accent — purple, same across both modes */
-  --accent: #9066a3;
-  --accent-foreground: #ffffff;
+  /* Pale gold wash */
+  --accent: #f8edd4;
+  --accent-foreground: #6e4a10;
 
-  /* Utility */
   --destructive: #dc2626;
-  --border: #cbd5e1;
-  --input: #e2e8f0;
-  --ring: var(--purple-medium);
+  --border: rgba(2, 18, 45, 0.12);
+  --input: rgba(2, 18, 45, 0.08);
+  --ring: #8a5c16;
 
-  /* Chart */
-  --chart-1: #1a5fb8;
-  --chart-2: #2563eb;
-  --chart-3: #7c3aed;
-  --chart-4: #a855f7;
-  --chart-5: #c084fc;
+  --chart-1: #bb7f2c;
+  --chart-2: #deb049;
+  --chart-3: #2596be;
+  --chart-4: #0e6d8c;
+  --chart-5: #02122d;
 
-  /* Sidebar */
-  --sidebar: #f1f5f9;
-  --sidebar-foreground: #0f172a;
-  --sidebar-primary: #1a5fb8;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #9066a3;
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #cbd5e1;
-  --sidebar-ring: #1a5fb8;
+  --sidebar: #f4f8fb;
+  --sidebar-foreground: #02122d;
+  --sidebar-primary: #8a5c16;
+  --sidebar-primary-foreground: #f4f8fb;
+  --sidebar-accent: #f8edd4;
+  --sidebar-accent-foreground: #6e4a10;
+  --sidebar-border: rgba(2, 18, 45, 0.12);
+  --sidebar-ring: #8a5c16;
 }
 
 .dark {
-  /* Dark theme */
-  --background: #0f172a;
-  --foreground: #f8fafc;
-  --card: #1e293b;
-  --card-foreground: #f8fafc;
-  --popover: #1e293b;
-  --popover-foreground: #f8fafc;
-  
-  /* Primary - brightened blue for dark mode */
-  --primary: #017afc;
-  --primary-foreground: #ffffff;
-  
-  /* Secondary - darker blue */
-  --secondary: #1e293b;
-  --secondary-foreground: #f8fafc;
-  
-  /* Muted - subtle gray/blue */
-  --muted: #334155;
-  --muted-foreground: #94a3b8;
-  
-  /* Accent - brightened purple for dark mode */
-  --accent: #a479b8;
-  --accent-foreground: #ffffff;
-  
-  /* Utility colors */
+  color-scheme: dark;
+  --background: #02122d;
+  --foreground: #eafaff;
+  --card: #0b1c38;
+  --card-foreground: #eafaff;
+  --popover: #0b1c38;
+  --popover-foreground: #eafaff;
+
+  /* Lighter gold for emphasis text and filled chips */
+  --primary: #deb049;
+  --primary-foreground: #eafaff;
+
+  /* Teal-tinted navy for real surfaces */
+  --secondary: #0e2c44;
+  --secondary-foreground: #eafaff;
+
+  --muted: #10243f;
+  --muted-foreground: #b7c9d6;
+
+  /* Quiet lifted navy so outline hover does not flash a solid fill */
+  --accent: #132844;
+  --accent-foreground: #deb049;
+
   --destructive: #f87171;
-  --border: rgba(255, 255, 255, 0.1);
-  --input: rgba(255, 255, 255, 0.15);
-  --ring: var(--purple-medium);
-  
-  /* Chart colors - brighter for dark mode */
-  --chart-1: #3a85d9;
-  --chart-2: #6e93d0;
-  --chart-3: #8c79c2;
-  --chart-4: #a983c1;
-  --chart-5: #c590c0;
-  
-  /* Sidebar */
-  --sidebar: #1e293b;
-  --sidebar-foreground: #f8fafc;
-  --sidebar-primary: #1e70ca;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #a479b8;
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: rgba(255, 255, 255, 0.1);
-  --sidebar-ring: #1e70ca;
+  --border: rgba(222, 176, 73, 0.22);
+  --input: rgba(234, 250, 255, 0.08);
+  --ring: #deb049;
+
+  --chart-1: #bb7f2c;
+  --chart-2: #deb049;
+  --chart-3: #2596be;
+  --chart-4: #7ec8e0;
+  --chart-5: #eafaff;
+
+  --sidebar: #0b1c38;
+  --sidebar-foreground: #eafaff;
+  --sidebar-primary: #deb049;
+  --sidebar-primary-foreground: #eafaff;
+  --sidebar-accent: #132844;
+  --sidebar-accent-foreground: #deb049;
+  --sidebar-border: rgba(222, 176, 73, 0.22);
+  --sidebar-ring: #deb049;
 }
 
 @layer base {
@@ -167,14 +160,14 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--primary);
+  background-color: var(--gold);
   border-radius: 10px;
   transition: all 0.3s ease;
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--secondary);
+  background-color: var(--teal);
   transition: all 0.3s ease;
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }

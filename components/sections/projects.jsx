@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import * as LucideIcons from 'lucide-react';
 import { useLazyLoadMultiple } from '@/components/hooks/useLazyLoad';
+import { usePerformanceMode } from '@/components/hooks/usePerformanceMode';
 import { projectsData, categories } from '@/lib/data';
 import {
   Github,
@@ -17,6 +18,7 @@ import {
   Lock,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import ProjectsBokeh from '@/components/sections/projectsBokeh';
 
 // --- Helper Components ---
 
@@ -44,20 +46,29 @@ const CategoryFilter = ({ categoriesWithCounts, selectedCategory, onSelectCatego
         <motion.button
           key={category.id}
           onClick={() => onSelectCategory(category.id)}
-          className={`px-3 py-2 md:px-5 md:py-2.5 text-xs md:text-sm rounded-full font-medium transition-all duration-300 flex items-center gap-2 border ${
+          className={`relative px-3 py-2 md:px-5 md:py-2.5 text-xs md:text-sm rounded-full font-medium flex items-center border ${
             isActive
-              ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25 border-primary'
+              ? 'text-primary-foreground border-transparent'
               : 'bg-background text-muted-foreground hover:bg-muted/40 hover:text-foreground border-border'
           }`}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          {Icon && <Icon size={15} />}
-          <span>{category.name}</span>
-          <span className={`text-xs font-bold px-1.5 py-0.5 rounded-full min-w-[20px] text-center ${
-            isActive ? 'bg-primary-foreground/20 text-primary-foreground' : 'bg-muted text-muted-foreground'
-          }`}>
-            {category.count}
+          {isActive && (
+            <motion.span
+              layoutId="activeCategory"
+              className="absolute inset-0 rounded-full bg-primary shadow-lg shadow-primary/25"
+              transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+            />
+          )}
+          <span className="relative z-10 flex items-center gap-2">
+            {Icon && <Icon size={15} />}
+            <span>{category.name}</span>
+            <span className={`text-xs font-bold px-1.5 py-0.5 rounded-full min-w-[20px] text-center ${
+              isActive ? 'bg-primary-foreground/20 text-primary-foreground' : 'bg-muted text-muted-foreground'
+            }`}>
+              {category.count}
+            </span>
           </span>
         </motion.button>
       );
@@ -65,36 +76,27 @@ const CategoryFilter = ({ categoriesWithCounts, selectedCategory, onSelectCatego
   </motion.div>
 );
 
-const ProjectCard = ({ project, onCardClick, isImageLoaded }) => (
+const ProjectCard = ({ project, onCardClick, isImageLoaded, index = 0, reduceMotion = false }) => (
   <motion.div
     layout
-    initial={{ opacity: 0, y: 20 }}
+    initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, scale: 0.95 }}
-    transition={{ duration: 0.35 }}
+    transition={{ duration: 0.35, delay: reduceMotion ? 0 : Math.min(index * 0.045, 0.28) }}
+    whileHover={reduceMotion ? undefined : { y: -6 }}
     className="group cursor-pointer"
     onClick={() => onCardClick(project)}
   >
     <div className="relative bg-card rounded-2xl overflow-hidden border border-border shadow-md hover:shadow-xl hover:border-primary/30 transition-all duration-300 flex flex-col">
 
       {/* Image area */}
-      <div className="relative aspect-video overflow-hidden bg-black">
-        {/* Blurred backdrop prevents letterbox bars on non-cropped screenshots */}
-        {isImageLoaded(project.thumbnail) && !project.isPrivate && (
-          <Image
-            src={project.thumbnail}
-            alt=""
-            aria-hidden
-            fill
-            className="object-cover scale-110 blur-xl opacity-40 pointer-events-none select-none"
-          />
-        )}
+      <div className="relative aspect-[3/2] overflow-hidden bg-black">
         {isImageLoaded(project.thumbnail) ? (
           <Image
             src={project.thumbnail}
             alt={project.title}
             fill
-            className={`object-contain relative z-10 transition-transform duration-500 group-hover:scale-105 ${project.isPrivate ? 'blur-sm scale-110' : ''}`}
+            className={`object-cover object-top transition-transform duration-500 group-hover:scale-105 ${project.isPrivate ? 'blur-sm scale-110' : ''}`}
           />
         ) : (
           <ImagePlaceholder className="w-full h-full" />
@@ -139,14 +141,14 @@ const ProjectCard = ({ project, onCardClick, isImageLoaded }) => (
       </div>
 
       {/* Card content */}
-      <div className="p-5 flex flex-col gap-3 flex-1">
+      <div className="p-4 sm:p-5 flex flex-col gap-3 flex-1">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="text-base md:text-lg font-bold text-foreground group-hover:text-primary transition-colors leading-tight line-clamp-2">
+          <h3 className="text-base lg:text-lg font-bold text-foreground group-hover:text-primary transition-colors leading-tight line-clamp-2">
             {project.title}
           </h3>
         </div>
 
-        <p className="text-xs md:text-sm text-muted-foreground leading-relaxed line-clamp-2">
+        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
           {project.description}
         </p>
 
@@ -165,7 +167,7 @@ const ProjectCard = ({ project, onCardClick, isImageLoaded }) => (
         </div>
 
         {/* Action buttons */}
-        <div className="flex gap-2 pt-1 mt-auto">
+        <div className="flex flex-wrap gap-2 pt-1 mt-auto">
           {project.isPrivate ? (
             <Button variant="outline" size="sm" className="flex-1 text-xs" disabled>
               <Lock size={12} className="mr-1.5" />
@@ -210,16 +212,32 @@ const ProjectCard = ({ project, onCardClick, isImageLoaded }) => (
 
 const ImageSwiper = ({ images, isImageLoaded, isPrivate }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const canSwipe = images.length > 1 && !isPrivate;
 
   const nextImage = () => setCurrentIndex((prev) => (prev + 1) % images.length);
   const prevImage = () => setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+
+  useEffect(() => {
+    if (!canSwipe) return undefined;
+
+    const onKey = (event) => {
+      if (event.key === 'ArrowRight') {
+        setCurrentIndex((prev) => (prev + 1) % images.length);
+      }
+      if (event.key === 'ArrowLeft') {
+        setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+      }
+    };
+
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [canSwipe, images.length]);
 
   const currentSrc = images[currentIndex];
   const loaded = isImageLoaded(currentSrc);
 
   return (
-    <div className="relative w-full aspect-video overflow-hidden bg-black">
-      {/* Blurred backdrop — same image scaled up, fills dead space without cropping the main image */}
+    <div className="relative w-full h-full overflow-hidden bg-black">
       {loaded && !isPrivate && (
         <Image
           src={currentSrc}
@@ -231,50 +249,73 @@ const ImageSwiper = ({ images, isImageLoaded, isPrivate }) => {
         />
       )}
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentIndex}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.25 }}
-          className="relative w-full h-full z-10"
-        >
-          {loaded ? (
-            <Image
-              src={currentSrc}
-              alt={`Project image ${currentIndex + 1}`}
-              fill
-              className={`object-contain ${isPrivate ? 'blur-lg scale-105' : ''}`}
-            />
-          ) : (
-            <ImagePlaceholder className="w-full h-full" />
-          )}
-        </motion.div>
-      </AnimatePresence>
+      <motion.div
+        className="relative w-full h-full z-10"
+        drag={canSwipe ? 'x' : false}
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.18}
+        onDragEnd={(_, info) => {
+          if (info.offset.x < -48) nextImage();
+          else if (info.offset.x > 48) prevImage();
+        }}
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0, x: 24 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -24 }}
+            transition={{ duration: 0.25 }}
+            className="absolute inset-0"
+          >
+            {loaded ? (
+              <Image
+                src={currentSrc}
+                alt={`Project image ${currentIndex + 1}`}
+                fill
+                draggable={false}
+                className={`object-contain ${isPrivate ? 'blur-lg scale-105' : ''}`}
+              />
+            ) : (
+              <ImagePlaceholder className="w-full h-full" />
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
 
-      {images.length > 1 && !isPrivate && (
+      {canSwipe && (
         <>
           <button
+            type="button"
             onClick={(e) => { e.stopPropagation(); prevImage(); }}
-            className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/40 backdrop-blur-sm hover:bg-black/60 rounded-full flex items-center justify-center text-white transition-all shadow-lg z-20"
+            className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 bg-background/80 backdrop-blur-sm border border-primary/40 hover:bg-primary hover:text-primary-foreground rounded-full flex items-center justify-center text-foreground transition-all shadow-lg z-20"
+            aria-label="Previous image"
           >
             <ChevronLeft size={18} />
           </button>
           <button
+            type="button"
             onClick={(e) => { e.stopPropagation(); nextImage(); }}
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/40 backdrop-blur-sm hover:bg-black/60 rounded-full flex items-center justify-center text-white transition-all shadow-lg z-20"
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 bg-background/80 backdrop-blur-sm border border-primary/40 hover:bg-primary hover:text-primary-foreground rounded-full flex items-center justify-center text-foreground transition-all shadow-lg z-20"
+            aria-label="Next image"
           >
             <ChevronRight size={18} />
           </button>
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
-            {images.map((_, index) => (
-              <button
-                key={index}
-                onClick={(e) => { e.stopPropagation(); setCurrentIndex(index); }}
-                className={`h-1.5 rounded-full transition-all ${index === currentIndex ? 'bg-white w-5' : 'bg-white/40 w-1.5'}`}
-              />
-            ))}
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20">
+            <div className="flex gap-1.5">
+              {images.map((_, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); setCurrentIndex(index); }}
+                  aria-label={`Show image ${index + 1}`}
+                  className={`h-1.5 rounded-full transition-all ${index === currentIndex ? 'bg-primary w-5' : 'bg-primary/40 w-1.5'}`}
+                />
+              ))}
+            </div>
+            <span className="px-2 py-0.5 rounded-full bg-background/80 border border-primary/30 text-foreground text-xs font-semibold">
+              {currentIndex + 1} / {images.length}
+            </span>
           </div>
         </>
       )}
@@ -282,7 +323,23 @@ const ImageSwiper = ({ images, isImageLoaded, isPrivate }) => {
   );
 };
 
-const ProjectModal = ({ project, onClose, isImageLoaded }) => {
+const modalContent = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.06, delayChildren: 0.12 },
+  },
+};
+
+const modalItem = {
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] } },
+};
+
+const ProjectModal = ({ project, projects, onClose, onSelectProject, isImageLoaded, reduceMotion }) => {
+  const projectIndex = projects.findIndex((item) => item.id === project.id);
+  const previousProject = projectIndex > 0 ? projects[projectIndex - 1] : null;
+  const nextProject = projectIndex >= 0 && projectIndex < projects.length - 1 ? projects[projectIndex + 1] : null;
+
   useEffect(() => {
     const handleEscape = (e) => e.key === 'Escape' && onClose();
     document.addEventListener('keydown', handleEscape);
@@ -292,6 +349,13 @@ const ProjectModal = ({ project, onClose, isImageLoaded }) => {
       document.body.style.overflow = 'unset';
     };
   }, [onClose]);
+
+  const contentVariants = reduceMotion
+    ? { hidden: {}, show: {} }
+    : modalContent;
+  const itemVariants = reduceMotion
+    ? { hidden: { opacity: 1, y: 0 }, show: { opacity: 1, y: 0 } }
+    : modalItem;
 
   return (
     <motion.div
@@ -303,22 +367,21 @@ const ProjectModal = ({ project, onClose, isImageLoaded }) => {
       onClick={onClose}
     >
       <motion.div
-        initial={{ scale: 0.88, opacity: 0, y: 40 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.88, opacity: 0, y: 40 }}
+        initial={reduceMotion ? { opacity: 0 } : { scale: 0.88, opacity: 0, y: 40 }}
+        animate={reduceMotion ? { opacity: 1 } : { scale: 1, opacity: 1, y: 0 }}
+        exit={reduceMotion ? { opacity: 0 } : { scale: 0.88, opacity: 0, y: 40 }}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
         className="relative bg-background rounded-2xl md:rounded-3xl w-full max-w-6xl max-h-[95vh] overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.5)] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Full-bleed image header — visible on all screen sizes */}
-        <div className="relative w-full" style={{ aspectRatio: '16/7' }}>
+        <div className="relative w-full shrink-0" style={{ aspectRatio: '16/7' }}>
           <ImageSwiper
+            key={project.id}
             images={project.images}
             isImageLoaded={isImageLoaded}
             isPrivate={project.isPrivate}
           />
 
-          {/* Top-left badge */}
           <div className="absolute top-4 left-4 z-20 flex gap-2">
             {project.isPrivate ? (
               <span className="flex items-center gap-1.5 px-3 py-1.5 bg-destructive/90 backdrop-blur-sm text-destructive-foreground text-xs font-bold rounded-full shadow-lg">
@@ -332,111 +395,161 @@ const ProjectModal = ({ project, onClose, isImageLoaded }) => {
             ) : null}
           </div>
 
-          {/* Close button — top right, always visible */}
           <button
+            type="button"
             onClick={onClose}
-            className="absolute top-4 right-4 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm text-white transition-colors shadow-lg"
+            className="absolute top-4 right-4 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-background/80 border border-primary/40 hover:bg-primary hover:text-primary-foreground backdrop-blur-sm text-foreground transition-colors shadow-lg"
             aria-label="Close modal"
           >
             <X size={20} />
           </button>
 
-          {/* Year pill */}
-          <span className="absolute bottom-4 right-4 z-20 px-3 py-1 bg-black/60 backdrop-blur-sm text-white text-xs font-semibold rounded-full">
+          <span className="absolute bottom-4 right-4 z-20 px-3 py-1 bg-background/80 border border-primary/30 backdrop-blur-sm text-foreground text-xs font-semibold rounded-full">
             {project.year}
           </span>
         </div>
 
-        {/* Scrollable content body */}
         <div className="overflow-y-auto flex-1">
-          {/* Private project notice */}
-          {project.isPrivate && (
-            <div className="mx-6 md:mx-8 mt-6 p-4 bg-destructive/8 border border-destructive/20 rounded-xl flex items-start gap-3">
-              <Shield size={20} className="text-destructive shrink-0 mt-0.5" />
-              <div>
-                <h4 className="font-semibold text-foreground mb-0.5">Private Enterprise Project</h4>
-                <p className="text-sm text-muted-foreground">
-                  This project was developed for Groupe Chiali under NDA. Screenshots and sensitive implementation details are confidential.
-                </p>
-              </div>
-            </div>
-          )}
+          <motion.div
+            key={project.id}
+            variants={contentVariants}
+            initial="hidden"
+            animate="show"
+            className="flex flex-col"
+          >
+            {project.isPrivate && (
+              <motion.div variants={itemVariants} className="mx-6 md:mx-8 mt-6 p-4 bg-destructive/8 border border-destructive/20 rounded-xl flex items-start gap-3">
+                <Shield size={20} className="text-destructive shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="font-semibold text-foreground mb-0.5">Private Enterprise Project</h4>
+                  <p className="text-sm text-muted-foreground">
+                    This project was developed for Groupe Chiali under NDA. Screenshots and sensitive implementation details are confidential.
+                  </p>
+                </div>
+              </motion.div>
+            )}
 
-          <div className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Left — title + description */}
-            <div className="md:col-span-2 flex flex-col gap-4">
-              <div>
-                <div className="flex items-center gap-3 mb-3 flex-wrap">
-                  <h3 className="text-2xl md:text-3xl font-bold text-foreground leading-tight">
-                    {project.title}
-                  </h3>
-                  {project.isPrivate && (
-                    <span className="flex items-center gap-1 px-2.5 py-1 bg-destructive/10 text-destructive text-xs font-semibold rounded-full border border-destructive/20">
-                      <Shield size={10} />
-                      NDA
+            <div className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="md:col-span-2 flex flex-col gap-4">
+                <div className="flex flex-col gap-3">
+                  {project.role && (
+                    <motion.p variants={itemVariants} className="text-sm font-medium text-primary">
+                      {project.role}
+                    </motion.p>
+                  )}
+                  <motion.div variants={itemVariants} className="flex items-center gap-3 flex-wrap">
+                    <h3 className="text-2xl md:text-3xl font-bold text-foreground leading-tight">
+                      {project.title}
+                    </h3>
+                    {project.isPrivate && (
+                      <span className="flex items-center gap-1 px-2.5 py-1 bg-destructive/10 text-destructive text-xs font-semibold rounded-full border border-destructive/20">
+                        <Shield size={10} />
+                        NDA
+                      </span>
+                    )}
+                  </motion.div>
+                  <motion.p variants={itemVariants} className="text-base text-muted-foreground leading-relaxed">
+                    {project.description}
+                  </motion.p>
+                </div>
+
+                {project.highlights?.length > 0 && (
+                  <motion.ul variants={itemVariants} className="flex flex-col gap-2.5">
+                    {project.highlights.map((highlight) => (
+                      <li key={highlight} className="flex gap-2.5 text-sm text-muted-foreground leading-relaxed">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </motion.ul>
+                )}
+
+                {project.results && (
+                  <motion.p variants={itemVariants} className="rounded-xl border border-primary/30 bg-primary/10 px-4 py-3 text-sm text-foreground">
+                    {project.results}
+                  </motion.p>
+                )}
+
+                {!project.isPrivate ? (
+                  <motion.div variants={itemVariants} className="flex gap-3 pt-2 flex-wrap">
+                    {project.liveUrl && (
+                      <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                        <motion.button
+                          type="button"
+                          className="px-6 py-3 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:bg-primary/90 transition-colors flex items-center gap-2 shadow-lg shadow-primary/20"
+                          whileHover={{ scale: 1.03, y: -1 }}
+                          whileTap={{ scale: 0.97 }}
+                        >
+                          <ExternalLink size={16} />
+                          View Live Site
+                        </motion.button>
+                      </Link>
+                    )}
+                    {project.githubUrl && (
+                      <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                        <motion.button
+                          type="button"
+                          className="px-6 py-3 bg-muted/50 text-foreground rounded-xl text-sm font-semibold hover:bg-muted/80 transition-colors flex items-center gap-2 border border-border"
+                          whileHover={{ scale: 1.03, y: -1 }}
+                          whileTap={{ scale: 0.97 }}
+                        >
+                          <Github size={16} />
+                          Source Code
+                        </motion.button>
+                      </Link>
+                    )}
+                  </motion.div>
+                ) : (
+                  <motion.div variants={itemVariants} className="pt-2">
+                    <Button variant="outline" disabled className="gap-2">
+                      <Lock size={14} />
+                      Confidential — Not Available Publicly
+                    </Button>
+                  </motion.div>
+                )}
+              </div>
+
+              <motion.div variants={itemVariants} className="flex flex-col gap-3">
+                <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
+                  Tech Stack
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {project.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-3 py-1.5 bg-muted/40 text-foreground text-xs font-medium rounded-lg border border-border hover:border-primary/40 hover:bg-primary/5 transition-colors"
+                    >
+                      {tech}
                     </span>
-                  )}
+                  ))}
                 </div>
-                <p className="text-base text-muted-foreground leading-relaxed">
-                  {project.description}
-                </p>
-              </div>
-
-              {/* Action buttons */}
-              {!project.isPrivate ? (
-                <div className="flex gap-3 pt-2 flex-wrap">
-                  {project.liveUrl && (
-                    <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                      <motion.button
-                        className="px-6 py-3 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:bg-primary/90 transition-colors flex items-center gap-2 shadow-lg shadow-primary/20"
-                        whileHover={{ scale: 1.03, y: -1 }}
-                        whileTap={{ scale: 0.97 }}
-                      >
-                        <ExternalLink size={16} />
-                        View Live Site
-                      </motion.button>
-                    </Link>
-                  )}
-                  {project.githubUrl && (
-                    <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                      <motion.button
-                        className="px-6 py-3 bg-muted/50 text-foreground rounded-xl text-sm font-semibold hover:bg-muted/80 transition-colors flex items-center gap-2 border border-border"
-                        whileHover={{ scale: 1.03, y: -1 }}
-                        whileTap={{ scale: 0.97 }}
-                      >
-                        <Github size={16} />
-                        Source Code
-                      </motion.button>
-                    </Link>
-                  )}
-                </div>
-              ) : (
-                <div className="pt-2">
-                  <Button variant="outline" disabled className="gap-2">
-                    <Lock size={14} />
-                    Confidential — Not Available Publicly
-                  </Button>
-                </div>
-              )}
+              </motion.div>
             </div>
+          </motion.div>
+        </div>
 
-            {/* Right — tech stack */}
-            <div className="flex flex-col gap-3">
-              <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
-                Tech Stack
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {project.technologies.map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-3 py-1.5 bg-muted/40 text-foreground text-xs font-medium rounded-lg border border-border hover:border-primary/40 hover:bg-primary/5 transition-colors"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
+        <div className="shrink-0 border-t border-border px-6 md:px-8 py-4 flex items-center justify-between gap-3">
+          <button
+            type="button"
+            disabled={!previousProject}
+            onClick={() => previousProject && onSelectProject(previousProject)}
+            className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary hover:text-primary disabled:pointer-events-none disabled:opacity-40"
+          >
+            <ChevronLeft size={16} />
+            Previous
+          </button>
+          <span className="text-xs font-medium text-muted-foreground">
+            {projectIndex + 1} / {projects.length}
+          </span>
+          <button
+            type="button"
+            disabled={!nextProject}
+            onClick={() => nextProject && onSelectProject(nextProject)}
+            className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary hover:text-primary disabled:pointer-events-none disabled:opacity-40"
+          >
+            Next
+            <ChevronRight size={16} />
+          </button>
         </div>
       </motion.div>
     </motion.div>
@@ -446,6 +559,7 @@ const ProjectModal = ({ project, onClose, isImageLoaded }) => {
 const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedProject, setSelectedProject] = useState(null);
+  const { shouldReduceMotion } = usePerformanceMode();
 
   const categoriesWithCounts = useMemo(() =>
     categories.map(cat => ({
@@ -476,8 +590,9 @@ const Projects = () => {
 
   return (
     <>
-      <section ref={projectsRef} className="py-20 px-3 lg:px-10">
-        <div className="max-w-7xl mx-auto">
+      <section ref={projectsRef} className="relative overflow-hidden py-20 px-3 lg:px-10">
+        <ProjectsBokeh reduceMotion={shouldReduceMotion} />
+        <div className="relative z-10 max-w-7xl mx-auto">
           {/* Section header */}
           <motion.div
             className="text-center mb-12"
@@ -485,6 +600,9 @@ const Projects = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
+            <span className="inline-block mb-4 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium uppercase tracking-wide">
+              Selected work
+            </span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4">
               My Projects
             </h2>
@@ -509,21 +627,17 @@ const Projects = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -16 }}
                 transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6"
+                className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 md:gap-6"
               >
                 {filteredProjects.map((project, index) => (
-                  <motion.div
+                  <ProjectCard
                     key={project.id}
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.35, delay: index * 0.07 }}
-                  >
-                    <ProjectCard
-                      project={project}
-                      onCardClick={setSelectedProject}
-                      isImageLoaded={isImageLoaded}
-                    />
-                  </motion.div>
+                    project={project}
+                    index={index}
+                    reduceMotion={shouldReduceMotion}
+                    onCardClick={setSelectedProject}
+                    isImageLoaded={isImageLoaded}
+                  />
                 ))}
               </motion.div>
             ) : (
@@ -567,8 +681,11 @@ const Projects = () => {
         {selectedProject && (
           <ProjectModal
             project={selectedProject}
+            projects={filteredProjects}
             onClose={() => setSelectedProject(null)}
+            onSelectProject={setSelectedProject}
             isImageLoaded={isImageLoaded}
+            reduceMotion={shouldReduceMotion}
           />
         )}
       </AnimatePresence>

@@ -35,7 +35,7 @@ export function ScrollIndicator({ children }) {
         <motion.div 
           className="absolute inset-0 rounded-full opacity-0"
           style={{ 
-            boxShadow: "0 0 8px rgba(100, 100, 255, 0.5)",
+            boxShadow: "0 0 8px rgba(222, 176, 73, 0.55)",
             opacity: isHovered ? 0.6 : 0
           }}
           transition={{ duration: 0.3 }}
@@ -48,14 +48,14 @@ export function ScrollIndicator({ children }) {
             scaleY,
             height: '100%',
             transformOrigin: 'top',
-            boxShadow: isHovered ? "0 0 10px rgba(100, 100, 255, 0.7)" : "none"
+            boxShadow: isHovered ? "0 0 10px rgba(222, 176, 73, 0.7)" : "none"
           }}
         />
         
         {/* Scroll to top button */}
         <motion.button
           onClick={scrollToTop}
-          className="absolute -bottom-8 -left-3 w-7 h-7 flex items-center justify-center rounded-full bg-primary/80 text-white opacity-0"
+          className="absolute -bottom-8 -left-3 w-7 h-7 flex items-center justify-center rounded-full bg-primary/80 text-[#02122d] dark:text-[#eafaff] opacity-0"
           aria-label="Scroll to top"
           animate={{ opacity: isHovered ? 0.8 : 0 }}
           transition={{ duration: 0.3 }}

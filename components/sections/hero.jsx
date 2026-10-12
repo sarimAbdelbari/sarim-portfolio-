@@ -5,6 +5,30 @@ import Image from "next/image";
 import { useEffect, useState, useMemo } from "react";
 import { usePerformanceMode } from "@/components/hooks/usePerformanceMode";
 import { Send, FileText } from "lucide-react";
+import { WHATSAPP_URL } from "@/components/layout/whatsappButton";
+
+function PaletteIcon({ src, alt, tone = "primary" }) {
+    const decorative = !alt;
+
+    return (
+        <span
+            role={decorative ? undefined : "img"}
+            aria-label={decorative ? undefined : alt}
+            aria-hidden={decorative ? true : undefined}
+            className={`block w-6 h-6 ${tone === "teal" ? "bg-teal" : "bg-primary"}`}
+            style={{
+                maskImage: `url(${src})`,
+                WebkitMaskImage: `url(${src})`,
+                maskSize: "contain",
+                WebkitMaskSize: "contain",
+                maskRepeat: "no-repeat",
+                WebkitMaskRepeat: "no-repeat",
+                maskPosition: "center",
+                WebkitMaskPosition: "center",
+            }}
+        />
+    );
+}
 
 export default function Hero() {
     // Performance mode for mobile devices
@@ -165,11 +189,11 @@ export default function Hero() {
                     <Button 
                         variant="default" 
                         size="lg" 
-                        className="relative rounded-full px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-medium cursor-pointer bg-gradient-to-r from-[#1a5fb8] via-[#1e70ca] to-[#3a85d9] text-white border-0 shadow-lg hover:shadow-2xl transition-all duration-300 group overflow-hidden"
-                        onClick={() => window.location.href = 'mailto:sarimabdelbari@gmail.com'}
+                        className="relative rounded-full px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-medium cursor-pointer bg-gradient-to-r from-[#bb7f2c] to-[#deb049] text-[#02122d] dark:text-[#eafaff] border-0 shadow-lg hover:shadow-2xl transition-all duration-300 group overflow-hidden"
+                        onClick={() => window.open(WHATSAPP_URL, "_blank", "noopener,noreferrer")}
                     >
                         {/* Animated glow background */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-[#1a5fb8] via-[#1e70ca] to-[#3a85d9] opacity-75 blur-xl group-hover:opacity-100 transition-all duration-300" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#bb7f2c] to-[#deb049] opacity-75 blur-xl group-hover:opacity-100 transition-all duration-300" />
                         
                         {/* Shimmer effect */}
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12" />
@@ -210,7 +234,7 @@ export default function Hero() {
                         variant="outline" 
                         size="lg" 
                         className="relative rounded-full px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-medium cursor-pointer bg-background/80 backdrop-blur-sm text-foreground border-2 border-primary/40 shadow-lg hover:shadow-2xl transition-all duration-300 group overflow-hidden hover:border-primary hover:bg-primary/5"
-                        onClick={() => window.open('https://drive.google.com/file/d/1JKhuq-rUgZlNbTIEvrsX5sUVej-GVKT_/view', '_blank', 'noopener,noreferrer')}
+                        onClick={() => window.open('https://drive.google.com/file/d/1z2iFZxerlsQriWUSbRZiY6LX5C749VKp/view?usp=sharing', '_blank', 'noopener,noreferrer')}
                     >
                         {/* Animated glow background */}
                         <div className="absolute inset-0 bg-primary/5 blur-xl group-hover:bg-primary/10 transition-all duration-300" />
@@ -265,7 +289,7 @@ export default function Hero() {
                 {/* Decorative elements - Disabled on mobile for performance */}
                 {!shouldReduceMotion && (
                     <motion.div 
-                        className="absolute -z-10 w-64 h-64 rounded-full bg-primary/10 blur-3xl"
+                        className="absolute -z-10 w-64 h-64 rounded-full bg-teal/15 blur-3xl"
                         animate={{ 
                             x: [0, 10, 0, -10, 0],
                             y: [0, -10, 0, 10, 0],
@@ -281,7 +305,7 @@ export default function Hero() {
                 
                 {/* Main image with floating animation - Reduced on mobile */}
                 <motion.div
-                    className="relative z-10 overflow-hidden rounded-2xl border-4 border-background shadow-xl"
+                    className="relative z-10"
                     animate={!shouldReduceMotion ? { 
                         y: [0, -10, 0, 10, 0],
                         rotate: [0, 1, 0, -1, 0]
@@ -292,21 +316,23 @@ export default function Hero() {
                         ease: "easeInOut"
                     }}
                 >
-                    <Image 
-                        src="/assets/images/GuibleHero.png" 
-                        alt="Sarim Kerroucha" 
-                        width={384}
-                        height={384}
-                        className="w-72 md:w-80 lg:w-96 h-auto object-cover"
-                        priority={true}
-                        loading="eager"
-                    />
+                    <div className="overflow-hidden rounded-2xl border-4 border-background shadow-xl">
+                        <Image 
+                            src="/assets/images/GuibleHero.png" 
+                            alt="Sarim Kerroucha" 
+                            width={384}
+                            height={384}
+                            className="w-72 md:w-80 lg:w-96 h-auto object-cover"
+                            priority={true}
+                            loading="eager"
+                        />
+                    </div>
                     
                     {/* Tech stack floating elements - Disabled on mobile for performance */}
                     {!shouldReduceMotion && (
                         <>
                     <motion.div 
-                        className="absolute -right-4 -bottom-4 bg-background p-3 rounded-lg shadow-lg border border-border"
+                        className="absolute -right-[14px] -bottom-[14px] bg-background p-3 rounded-lg shadow-lg border border-border"
                         animate={{ 
                             y: [0, 5, 0, -5, 0],
                             x: [0, -5, 0, 5, 0],
@@ -318,18 +344,11 @@ export default function Hero() {
                             delay: 1
                         }}
                     >
-                        <Image 
-                            src="/assets/svg/reactjs-svgrepo-com.svg" 
-                            alt="React" 
-                            width={24}
-                            height={24}
-                            className="w-6 h-6 text-primary"
-                            style={{ filter: 'brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(7500%) hue-rotate(210deg) brightness(100%) contrast(100%)' }}
-                        />
+                        <PaletteIcon src="/assets/svg/reactjs-svgrepo-com.svg" alt="React" />
                     </motion.div>
 
                     <motion.div 
-                        className="absolute -left-4 top-6 bg-background p-3 rounded-lg shadow-lg border border-border"
+                        className="absolute -left-[14px] top-[26px] bg-background p-3 rounded-lg shadow-lg border border-border"
                         animate={{ 
                             y: [0, -5, 0, 5, 0],
                             x: [0, 5, 0, -5, 0],
@@ -341,18 +360,11 @@ export default function Hero() {
                             delay: 0.5
                         }}
                     >
-                        <Image 
-                            src="/assets/svg/nextjs-svgrepo-com.svg" 
-                            alt="NextJS" 
-                            width={24}
-                            height={24}
-                            className="w-6 h-6"
-                            style={{ filter: 'brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(7500%) hue-rotate(210deg) brightness(100%) contrast(100%)' }}
-                        />
+                        <PaletteIcon src="/assets/svg/nextjs-svgrepo-com.svg" alt="NextJS" />
                     </motion.div>
 
                     <motion.div 
-                        className="absolute right-6 top-4 bg-background p-3 rounded-lg shadow-lg border border-border"
+                        className="absolute right-[26px] top-[18px] bg-background p-3 rounded-lg shadow-lg border border-border"
                         animate={{ 
                             y: [0, 8, 0, -8, 0],
                             rotate: [0, 5, 0, -5, 0]
@@ -364,18 +376,11 @@ export default function Hero() {
                             delay: 2
                         }}
                     >
-                        <Image 
-                            src="/assets/svg/nodejs-svgrepo-com.svg" 
-                            alt="NodeJS" 
-                            width={24}
-                            height={24}
-                            className="w-6 h-6"
-                            style={{ filter: 'brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(7500%) hue-rotate(210deg) brightness(100%) contrast(100%)' }}
-                        />
+                        <PaletteIcon src="/assets/svg/nodejs-svgrepo-com.svg" alt="NodeJS" />
                     </motion.div>
 
                     <motion.div 
-                        className="absolute -left-6 bottom-8 bg-background p-3 rounded-lg shadow-lg border border-border"
+                        className="absolute -left-[22px] bottom-[34px] bg-background p-3 rounded-lg shadow-lg border border-border"
                         animate={{ 
                             y: [0, -6, 0, 6, 0],
                             x: [0, 3, 0, -3, 0],
@@ -388,14 +393,7 @@ export default function Hero() {
                             delay: 1.5
                         }}
                     >
-                        <Image 
-                            src="/assets/svg/typescript-official-svgrepo-com.svg" 
-                            alt="TypeScript" 
-                            width={24}
-                            height={24}
-                            className="w-6 h-6"
-                            style={{ filter: 'brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(7500%) hue-rotate(210deg) brightness(100%) contrast(100%)' }}
-                        />
+                        <PaletteIcon src="/assets/svg/typescript-mark.svg" alt="TypeScript" />
                     </motion.div>
                     </>
                     )}
@@ -404,8 +402,10 @@ export default function Hero() {
                 </motion.div>
             </motion.div>
 
-             <motion.div 
-                        className="absolute  hover:scale-110 transition-transform duration-300 bottom-2 cursor-pointer bg-background p-3 rounded-lg shadow-lg border border-border"
+             <motion.button
+                        type="button"
+                        aria-label="Scroll down"
+                        className="absolute bottom-2 cursor-pointer bg-background p-3 rounded-lg shadow-lg border border-primary/40 hover:border-primary hover:scale-110 transition-all duration-300"
                         animate={{ 
                             y: [0, -6, 0, 6, 0],
                             x: [0, 3, 0, -3, 0],
@@ -419,15 +419,8 @@ export default function Hero() {
                         }}
                         onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
                     >
-                        <Image 
-                            src="/assets/svg/mouse-cursor-click-svgrepo-com.svg" 
-                            alt="Scroll down" 
-                            width={24}
-                            height={24}
-                            className="w-6 h-6"
-                            style={{ filter: 'brightness(80) saturate(100%) invert(27%) sepia(100%) saturate(7500%) hue-rotate(210deg) brightness(100%) contrast(100%)' }}
-                        />
-            </motion.div>
+                        <PaletteIcon src="/assets/svg/mouse-cursor-click-svgrepo-com.svg" alt="" />
+            </motion.button>
         </section>
     );
 }

@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 
 const WHATSAPP_URL = "https://wa.me/213549022271";
 
+export { WHATSAPP_URL };
+
 const WhatsAppIcon = ({ className }) => (
   <svg
     className={className}

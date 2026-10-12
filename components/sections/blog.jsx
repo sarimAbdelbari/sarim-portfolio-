@@ -111,7 +111,7 @@ const Blog = () => {
         <div className="absolute inset-0 pointer-events-none">
           {/* Animated gradient orbs */}
           <motion.div
-            className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent rounded-full blur-3xl"
+            className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-teal/18 via-teal/8 to-transparent rounded-full blur-3xl"
             animate={{
               x: [0, 50, 0],
               y: [0, -30, 0],
@@ -126,7 +126,7 @@ const Blog = () => {
           />
           
           <motion.div
-            className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-l from-primary/8 via-primary/4 to-transparent rounded-full blur-3xl"
+            className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-l from-teal/15 via-teal/6 to-transparent rounded-full blur-3xl"
             animate={{
               x: [0, -40, 0],
               y: [0, 25, 0],
@@ -370,7 +370,7 @@ const Blog = () => {
         .swiper-pagination-bullet-custom {
           width: 12px;
           height: 12px;
-          background: hsl(var(--muted-foreground));
+          background: var(--muted-foreground);
           border-radius: 50%;
           opacity: 0.3;
           cursor: pointer;
@@ -378,7 +378,7 @@ const Blog = () => {
         }
         
         .swiper-pagination-bullet-active-custom {
-          background: hsl(var(--primary));
+          background: var(--primary);
           opacity: 1;
           transform: scale(1.2);
         }

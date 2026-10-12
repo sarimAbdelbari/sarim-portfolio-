@@ -19,7 +19,7 @@ export function ProgressiveBlur({
       className={cn('pointer-events-none', className)}
       style={{
         background: `linear-gradient(${gradientDirection[direction]}, 
-          hsl(var(--background)) 0%, 
+          var(--background) 0%, 
           transparent 100%)`,
         backdropFilter: `blur(${blurIntensity * 8}px)`,
         WebkitBackdropFilter: `blur(${blurIntensity * 8}px)`,

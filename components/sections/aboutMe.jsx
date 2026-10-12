@@ -106,7 +106,7 @@ const AboutMe = () => {
         <div className="absolute inset-0 pointer-events-none">
           {/* Animated gradient orbs */}
           <motion.div
-            className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent rounded-full blur-3xl"
+            className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-teal/18 via-teal/8 to-transparent rounded-full blur-3xl"
             animate={{
               x: [0, 50, 0],
               y: [0, -30, 0],
@@ -121,7 +121,7 @@ const AboutMe = () => {
           />
           
           <motion.div
-            className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-l from-primary/8 via-primary/4 to-transparent rounded-full blur-3xl"
+            className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-l from-teal/15 via-teal/6 to-transparent rounded-full blur-3xl"
             animate={{
               x: [0, -40, 0],
               y: [0, 25, 0],
@@ -225,7 +225,7 @@ const AboutMe = () => {
               </div>
               
               {/* Decorative Glow */}
-              <div className="absolute -inset-4 bg-primary/10 rounded-3xl blur-2xl -z-10" />
+              <div className="absolute -inset-4 bg-teal/15 rounded-3xl blur-2xl -z-10" />
             </motion.div>
 
             {/* Decorative Elements */}

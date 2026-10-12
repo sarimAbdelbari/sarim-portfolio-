@@ -154,7 +154,7 @@ const Contact = () => {
         <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
           {/* Large animated gradient orbs */}
           <motion.div
-            className="absolute top-10 left-5 w-[500px] h-[500px] rounded-full bg-gradient-to-r from-primary/12 via-primary/6 to-transparent blur-3xl"
+            className="absolute top-10 left-5 w-[500px] h-[500px] rounded-full bg-gradient-to-r from-teal/20 via-teal/10 to-transparent blur-3xl"
             animate={{
               x: [0, 60, 0],
               y: [0, -40, 0],
@@ -169,7 +169,7 @@ const Contact = () => {
           />
           
           <motion.div
-            className="absolute bottom-10 right-5 w-[400px] h-[400px] rounded-full bg-gradient-to-l from-primary/10 via-primary/5 to-transparent blur-3xl"
+            className="absolute bottom-10 right-5 w-[400px] h-[400px] rounded-full bg-gradient-to-l from-teal/18 via-teal/8 to-transparent blur-3xl"
             animate={{
               x: [0, -50, 0],
               y: [0, 30, 0],
@@ -186,7 +186,7 @@ const Contact = () => {
 
           {/* Medium orbs */}
           <motion.div
-            className="absolute top-1/2 left-1/4 w-64 h-64 rounded-full bg-gradient-to-br from-primary/8 to-transparent blur-2xl"
+            className="absolute top-1/2 left-1/4 w-64 h-64 rounded-full bg-gradient-to-br from-teal/15 to-transparent blur-2xl"
             animate={{
               x: [0, 40, 0],
               y: [0, -25, 0],
@@ -410,9 +410,9 @@ const Contact = () => {
                   type="submit"
                   size="lg"
                   disabled={status === "loading"}
-                  className="relative rounded-full px-8 md:px-12 py-4 md:py-6 text-lg md:text-xl font-medium cursor-pointer bg-gradient-to-r from-[#1a5fb8] via-[#1e70ca] to-[#3a85d9] text-white border-0 shadow-lg hover:shadow-2xl transition-all duration-300 group overflow-hidden disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="relative rounded-full px-8 md:px-12 py-4 md:py-6 text-lg md:text-xl font-medium cursor-pointer bg-gradient-to-r from-[#bb7f2c] to-[#deb049] text-[#02122d] dark:text-[#eafaff] border-0 shadow-lg hover:shadow-2xl transition-all duration-300 group overflow-hidden disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#1a5fb8] via-[#1e70ca] to-[#3a85d9] opacity-75 blur-xl group-hover:opacity-100 transition-all duration-300" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#bb7f2c] to-[#deb049] opacity-75 blur-xl group-hover:opacity-100 transition-all duration-300" />
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12" />
                   <span className="relative z-10 flex items-center gap-3">
                     {status === "loading" ? "Sending..." : "Get in touch!"}
