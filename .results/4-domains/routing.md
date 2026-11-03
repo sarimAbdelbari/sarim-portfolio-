@@ -187,7 +187,7 @@ export const metadata = {
     siteName: "Sarim Kerroucha's Portfolio",
   },
   icons: {
-    icon: "/assets/svg/Black-and-White-Minimalist-Luxury-fashion-Logo.ico",
+    icon: "/assets/svg/GoldenSarimLogo.ico",
   },
 };
 ```
